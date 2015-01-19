@@ -4,38 +4,54 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team4729.robot.commands.AFrameWinchManualDown;
+import org.usfirst.frc.team4729.robot.commands.AFrameWinchManualUp;
+import org.usfirst.frc.team4729.robot.commands.BottomPotTest;
+import org.usfirst.frc.team4729.robot.commands.ToteClampManualDown;
+import org.usfirst.frc.team4729.robot.commands.ToteClampManualUp;
+import org.usfirst.frc.team4729.robot.commands.ToteTiltManualDown;
+import org.usfirst.frc.team4729.robot.commands.ToteTiltManualUp;
 import org.usfirst.frc.team4729.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
+import org.usfirst.frc.team4729.robot.commands.OneStickTank;
+import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
+import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	Joystick stickLeft   = new Joystick(1);
-    Joystick stickRight  = new Joystick(2);
-    Joystick xbox        = new Joystick(3);
-    Button button1       = new JoystickButton(stickLeft,  1);
-    Button button2       = new JoystickButton(stickLeft,  2);
-    Button button3       = new JoystickButton(stickLeft,  3);
-    Button button4       = new JoystickButton(stickLeft,  4);
-    Button button5       = new JoystickButton(stickLeft,  5);
-    Button button6       = new JoystickButton(stickLeft,  6);
-    Button button7       = new JoystickButton(stickLeft,  7);
-    Button button8       = new JoystickButton(stickLeft,  8);
-    Button button9       = new JoystickButton(stickLeft,  9);
-    Button button10      = new JoystickButton(stickLeft,  10);
-    Button button11      = new JoystickButton(stickLeft,  11);
-    Button rightButton1  = new JoystickButton(stickRight, 1);
-    Button rightButton2  = new JoystickButton(stickRight, 2);
-    Button rightButton3  = new JoystickButton(stickRight, 3);
-    Button rightButton4  = new JoystickButton(stickRight, 4);
-    Button rightButton5  = new JoystickButton(stickRight, 5);
-    Button rightButton6  = new JoystickButton(stickRight, 6);
-    Button rightButton7  = new JoystickButton(stickRight, 7);
-    Button rightButton8  = new JoystickButton(stickRight, 8);
-    Button rightButton9  = new JoystickButton(stickRight, 9);
-    Button rightButton10 = new JoystickButton(stickRight, 10);
-    Button rightButton11 = new JoystickButton(stickRight, 11);
+	/* driveBase left is 0, right is 1
+	 * toteClamp is 2
+	 * toteTilt is 3
+	 * aFrameWinch is 4
+	 */
+	Joystick leftStick   = new Joystick(0);
+    Joystick rightStick  = new Joystick(1);
+    Joystick xbox        = new Joystick(2);
+    Button button1       = new JoystickButton(leftStick,  1);
+    Button button2       = new JoystickButton(leftStick,  2);
+    Button button3       = new JoystickButton(leftStick,  3);
+    Button button4       = new JoystickButton(leftStick,  4);
+    Button button5       = new JoystickButton(leftStick,  5);
+    Button button6       = new JoystickButton(leftStick,  6);
+    Button button7       = new JoystickButton(leftStick,  7);
+    Button button8       = new JoystickButton(leftStick,  8);
+    Button button9       = new JoystickButton(leftStick,  9);
+    Button button10      = new JoystickButton(leftStick,  10);
+    Button button11      = new JoystickButton(leftStick,  11);
+    Button rightButton1  = new JoystickButton(rightStick, 1);
+    Button rightButton2  = new JoystickButton(rightStick, 2);
+    Button rightButton3  = new JoystickButton(rightStick, 3);
+    Button rightButton4  = new JoystickButton(rightStick, 4);
+    Button rightButton5  = new JoystickButton(rightStick, 5);
+    Button rightButton6  = new JoystickButton(rightStick, 6);
+    Button rightButton7  = new JoystickButton(rightStick, 7);
+    Button rightButton8  = new JoystickButton(rightStick, 8);
+    Button rightButton9  = new JoystickButton(rightStick, 9);
+    Button rightButton10 = new JoystickButton(rightStick, 10);
+    Button rightButton11 = new JoystickButton(rightStick, 11);
     Button a             = new JoystickButton(xbox,       1);
     Button b             = new JoystickButton(xbox,       2);
     Button x             = new JoystickButton(xbox,       3);
@@ -46,11 +62,11 @@ public class OI {
     Button R3            = new JoystickButton(xbox,       10);
     
     public OI() {
-    	//button1.whileHeld ();
-    	//button2.whileHeld ();
-    	//button3.whileHeld ();
-    	//button4.whileHeld ();
-    	//button5.whileHeld ();
+    	button1.whileHeld (new BottomPotTest());
+    	button2.whenPressed (new OneStickTank(leftStick));
+    	button3.whenPressed (new TwoStickTank(leftStick, rightStick));
+    	button4.whenPressed (new OneStickArcade(leftStick));
+    	button5.whenPressed (new TwoStickArcade(leftStick, rightStick));
     	//button6.whileHeld ();
     	//button7.whileHeld ();
     	//button8.whileHeld ();
@@ -68,12 +84,12 @@ public class OI {
     	//rightButton9.whileHeld ();
     	//rightButton10.whileHeld ();
     	//rightButton11.whileHeld ();
-    	//a.whileHeld ();
-    	//b.whileHeld ();
-    	//x.whileHeld ();
-    	//y.whileHeld ();
-    	//lb.whileHeld ();
-    	//rb.whileHeld ();
+    	a.whileHeld (new ToteTiltManualDown());
+    	b.whileHeld (new ToteClampManualUp());
+    	x.whileHeld (new ToteClampManualDown());
+    	y.whileHeld (new ToteTiltManualUp());
+    	lb.whileHeld (new AFrameWinchManualDown());
+    	rb.whileHeld (new AFrameWinchManualUp());
     	//L3.whileHeld ();
     	//R3.whileHeld ();
     	

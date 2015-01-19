@@ -2,10 +2,16 @@
 package org.usfirst.frc.team4729.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 import org.usfirst.frc.team4729.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4729.robot.subsystems.AFrameWinch;
+import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team4729.robot.subsystems.ToteClamp;
+import org.usfirst.frc.team4729.robot.subsystems.ToteTilt;
 import org.usfirst.frc.team4729.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -16,8 +22,14 @@ import org.usfirst.frc.team4729.robot.subsystems.ExampleSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	Joystick leftStick = new Joystick(0);
+	Joystick rightStick = new Joystick(1);
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public static final ToteTilt toteTilt = new ToteTilt();
+	public static final ToteClamp toteClamp = new ToteClamp();
+	public static final AFrameWinch aFrameWinch = new AFrameWinch();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -54,6 +66,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+		
     }
 
     /**
