@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AFrameWinchManualUp extends Command {
 
     public AFrameWinchManualUp() {
-    	requires(Robot.aFrameWinch);
+    	requires(Robot.emuWinch);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,7 +22,7 @@ public class AFrameWinchManualUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.aFrameWinch.moveUp();
+    	Robot.emuWinch.moveUp();
     	SmartDashboard.putString("A Frame Winch Manual State", "Going Up");
     }
 
@@ -39,6 +39,7 @@ public class AFrameWinchManualUp extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.emuWinch.stop();
     	SmartDashboard.putString("A Frame Winch Manual State", "Inactive");
     }
 }

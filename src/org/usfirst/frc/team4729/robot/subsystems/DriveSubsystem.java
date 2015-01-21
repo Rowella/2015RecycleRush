@@ -34,6 +34,10 @@ public class DriveSubsystem extends Subsystem {
 		driveTrain.tankDrive(stick.getY(), stick.getX());
 		
 	}
+	
+	public void autoTank (double leftSpeed, double rightSpeed) {
+		driveTrain.tankDrive(leftSpeed, rightSpeed);
+	}	
 
 }
 

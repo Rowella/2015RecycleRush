@@ -5,41 +5,35 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
-
 /**
  *
  */
-public class ToteTilt extends Subsystem {
-	static double MANUAL_TOTE_TILT_SPEED = 0.5;
-    Talon toteTilt = new Talon(3);
-    Potentiometer tiltPot = new AnalogPotentiometer(0, 360, 30);
+public class EmuWinch extends Subsystem {
+	Talon emuWinch = new Talon(4);
+	Potentiometer emuPot = new AnalogPotentiometer(2);
+	static double MANUAL_EMU_WINCH_SPEED = 0.5;
+    
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-    	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public double readTiltPot() {
-    	return tiltPot.get();
-	}
-    
-    public double bottomPotTest(){
-    	return tiltPot.get(); //max 392, min 30
-    }
-    
     public void moveUp(){
-    	toteTilt.set(MANUAL_TOTE_TILT_SPEED);
+    	emuWinch.set(MANUAL_EMU_WINCH_SPEED);
     }
-    
     public void moveDown(){
-    	toteTilt.set(-MANUAL_TOTE_TILT_SPEED);
+    	emuWinch.set(-MANUAL_EMU_WINCH_SPEED);
     }
     
-    public void stop(){
-    	toteTilt.set(0);
+    public void stop() {
+    	emuWinch.set(0);
+    }
+
+    public double emuPotRead(){
+    	return emuPot.get();
     }
 }
 

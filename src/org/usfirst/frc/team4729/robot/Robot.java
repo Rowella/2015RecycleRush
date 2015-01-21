@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team4729.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4729.robot.subsystems.AFrameWinch;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team4729.robot.subsystems.EmuWinch;
+import org.usfirst.frc.team4729.robot.subsystems.Swtiches;
 import org.usfirst.frc.team4729.robot.subsystems.ToteClamp;
 import org.usfirst.frc.team4729.robot.subsystems.ToteTilt;
 import org.usfirst.frc.team4729.robot.subsystems.ExampleSubsystem;
@@ -29,7 +31,8 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final ToteTilt toteTilt = new ToteTilt();
 	public static final ToteClamp toteClamp = new ToteClamp();
-	public static final AFrameWinch aFrameWinch = new AFrameWinch();
+	public static final EmuWinch emuWinch = new EmuWinch(); 
+	public static final Swtiches swtiches = new Swtiches();
 	public static OI oi;
 
     Command autonomousCommand;
