@@ -3,15 +3,17 @@ package org.usfirst.frc.team4729.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team4729.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4729.robot.commands.ExampleCommand;
-import org.usfirst.frc.team4729.robot.subsystems.AFrameWinch;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.EmuWinch;
-import org.usfirst.frc.team4729.robot.subsystems.Swtiches;
+import org.usfirst.frc.team4729.robot.subsystems.Switches;
 import org.usfirst.frc.team4729.robot.subsystems.ToteClamp;
 import org.usfirst.frc.team4729.robot.subsystems.ToteTilt;
 import org.usfirst.frc.team4729.robot.subsystems.ExampleSubsystem;
@@ -24,15 +26,24 @@ import org.usfirst.frc.team4729.robot.subsystems.ExampleSubsystem;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	Preferences prefs;
 	Joystick leftStick = new Joystick(0);
 	Joystick rightStick = new Joystick(1);
+	
+	public static boolean manual = true;
+	public static double TOTE_TILT_UP_ANGLE = 1;
+	public static double TOTE_TILT_DOWN_ANGLE = 0.1;
+	public static double TOTE_CLAMP_UP_ANGLE = 1;
+	public static double TOTE_CLAMP_DOWN_ANGLE = 0.1;
+	public static double EMU_UP_ANGLE = 1;
+	public static double EMU_DOWN_ANGLE = 0.1;
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final ToteTilt toteTilt = new ToteTilt();
 	public static final ToteClamp toteClamp = new ToteClamp();
 	public static final EmuWinch emuWinch = new EmuWinch(); 
-	public static final Swtiches swtiches = new Swtiches();
+	public static final Switches switches = new Switches();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -42,9 +53,13 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
+    	prefs.getBoolean("Going for Tote?", true);
+    	prefs.getBoolean("Going on Ramp?", true);
+		System.out.println("Before OI");
+    	oi = new OI();
+    	System.out.println("After OI");
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        autonomousCommand = new AutonomousCommand(TOTE_CLAMP_UP_ANGLE, TOTE_TILT_UP_ANGLE, EMU_UP_ANGLE);//TOTE_CLAMP_UP_ANGLE, TOTE_TILT_UP_ANGLE, EMU_UP_ANGLE);
     }
 	
 	public void disabledPeriodic() {
@@ -85,6 +100,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        //SmartDashboard.putBoolean("Tote In Robot?", Robot.toteClamp.readToteSensor());
     }
     
     /**

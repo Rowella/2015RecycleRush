@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ToteClampManualUp extends Command {
+public class EmuWinchManualDown extends Command {
 
-    public ToteClampManualUp() {
-    	requires(Robot.toteClamp);
+    public EmuWinchManualDown() {
+    	requires(Robot.emuWinch);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,15 +22,15 @@ public class ToteClampManualUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putString("Tote Clamp Manual State", "Going Up");
+		SmartDashboard.putString("A Frame Winch Manual State", "Going Down");
     	if (Robot.manual) {
-    		Robot.toteClamp.moveUp();
+    		Robot.emuWinch.moveDown();
     	} else {
-    		while (Robot.toteClamp.readClampPot() < Robot.TOTE_CLAMP_UP_ANGLE) {
-    			Robot.toteClamp.moveUp();
+    		while (Robot.emuWinch.emuPotRead() > Robot.EMU_DOWN_ANGLE){
+    			Robot.emuWinch.moveDown();
     		}
     	}
-
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,7 +46,7 @@ public class ToteClampManualUp extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.toteClamp.stop();
-    	SmartDashboard.putString("Tote Clamp Manual State", "Inactive");
+    	Robot.emuWinch.stop();
+    	SmartDashboard.putString("A Frame Winch Manual State", "Inactive");
     }
 }

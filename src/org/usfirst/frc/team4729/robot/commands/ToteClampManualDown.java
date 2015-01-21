@@ -22,8 +22,14 @@ public class ToteClampManualDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.toteClamp.moveDown();
     	SmartDashboard.putString("Tote Clamp Manual State", "Going Down");
+    	if (Robot.manual) {
+    		Robot.toteClamp.moveDown();
+    	} else {
+    		while (Robot.toteClamp.readClampPot() > Robot.TOTE_CLAMP_DOWN_ANGLE) {
+    			Robot.toteClamp.moveDown();
+    		}
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

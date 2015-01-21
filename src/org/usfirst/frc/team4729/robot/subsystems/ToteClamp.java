@@ -1,9 +1,11 @@
 package org.usfirst.frc.team4729.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 public class ToteClamp extends Subsystem {
 	Talon toteClamp = new Talon(2);
 	Potentiometer clampPot = new AnalogPotentiometer(1);
+	DigitalInput toteSensor = new DigitalInput(3);
 	static double MANUAL_TOTE_CLAMP_SPEED = 0.5;
 	
     // Put methods for controlling this subsystem
@@ -22,8 +25,13 @@ public class ToteClamp extends Subsystem {
     }
     
     public double readClampPot() {
+    	SmartDashboard.putNumber("clampPot", clampPot.get());
     	return clampPot.get();
 	}
+    
+    public boolean readToteSensor() {
+    	return toteSensor.get();
+    }
     
     public void moveUp(){
     	toteClamp.set(MANUAL_TOTE_CLAMP_SPEED);

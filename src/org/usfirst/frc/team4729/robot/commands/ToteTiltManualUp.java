@@ -22,8 +22,14 @@ public class ToteTiltManualUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.toteTilt.moveUp();
     	SmartDashboard.putString("Tote Tilt Manual State", "Going Up");
+    	if (Robot.manual) {
+    		Robot.toteTilt.moveUp();
+    	} else {
+    		while (Robot.toteTilt.readTiltPot() < Robot.TOTE_TILT_UP_ANGLE) {
+    			Robot.toteTilt.moveUp();
+    		}
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

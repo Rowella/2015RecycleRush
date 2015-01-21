@@ -4,9 +4,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team4729.robot.commands.AFrameWinchManualDown;
-import org.usfirst.frc.team4729.robot.commands.AFrameWinchManualUp;
+import org.usfirst.frc.team4729.robot.commands.EmuWinchManualDown;
+import org.usfirst.frc.team4729.robot.commands.EmuWinchManualUp;
+import org.usfirst.frc.team4729.robot.commands.AutoToManual;
 import org.usfirst.frc.team4729.robot.commands.BottomPotTest;
+import org.usfirst.frc.team4729.robot.commands.ManualToAuto;
 import org.usfirst.frc.team4729.robot.commands.ToteClampManualDown;
 import org.usfirst.frc.team4729.robot.commands.ToteClampManualUp;
 import org.usfirst.frc.team4729.robot.commands.ToteTiltManualDown;
@@ -22,10 +24,23 @@ import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	/* driveBase left is 0, right is 1
+	/* PWM:
+	 * driveBase left is 0, right is 1
 	 * toteClamp is 2
 	 * toteTilt is 3
 	 * aFrameWinch is 4
+	 */
+	/* Digital In:
+	 * Tote or bin switch is 0
+	 * Ramp or no switch is 1
+	 * Tote Sensor is 2
+	 * Left Encoders are 3 and 4
+	 * Right Encoders are 5 and 6
+	 */
+	/*Analog In:
+	 * tiltPot is 0
+	 * clampPot is 1
+	 * emuPot is 2
 	 */
 	Joystick leftStick   = new Joystick(0);
     Joystick rightStick  = new Joystick(1);
@@ -82,16 +97,16 @@ public class OI {
     	//rightButton7.whileHeld ();
     	//rightButton8.whileHeld ();
     	//rightButton9.whileHeld ();
-    	//rightButton10.whileHeld ();
-    	//rightButton11.whileHeld ();
+    	//rightButton10.whenPressed (new AutoToManual());
+    	//rightButton11.whenPressed (new ManualToAuto());
     	a.whileHeld (new ToteTiltManualDown());
     	b.whileHeld (new ToteClampManualUp());
     	x.whileHeld (new ToteClampManualDown());
     	y.whileHeld (new ToteTiltManualUp());
-    	lb.whileHeld (new AFrameWinchManualDown());
-    	rb.whileHeld (new AFrameWinchManualUp());
-    	//L3.whileHeld ();
-    	//R3.whileHeld ();
+    	lb.whileHeld (new EmuWinchManualDown());
+    	rb.whileHeld (new EmuWinchManualUp());
+    	L3.whileHeld (new AutoToManual());
+    	R3.whileHeld (new ManualToAuto());
     	
     	
     }

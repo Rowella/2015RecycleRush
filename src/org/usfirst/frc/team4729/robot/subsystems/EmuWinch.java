@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -33,6 +34,7 @@ public class EmuWinch extends Subsystem {
     }
 
     public double emuPotRead(){
+    	SmartDashboard.putNumber("emuPot", emuPot.get());
     	return emuPot.get();
     }
 }
