@@ -53,8 +53,6 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	prefs.getBoolean("Going for Tote?", true);
-    	prefs.getBoolean("Going on Ramp?", true);
 		System.out.println("Before OI");
     	oi = new OI();
     	System.out.println("After OI");
