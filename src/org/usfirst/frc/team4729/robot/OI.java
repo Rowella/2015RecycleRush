@@ -13,7 +13,6 @@ import org.usfirst.frc.team4729.robot.commands.ToteClampManualDown;
 import org.usfirst.frc.team4729.robot.commands.ToteClampManualUp;
 import org.usfirst.frc.team4729.robot.commands.ToteTiltManualDown;
 import org.usfirst.frc.team4729.robot.commands.ToteTiltManualUp;
-import org.usfirst.frc.team4729.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4729.robot.commands.OneStickArcade;
 import org.usfirst.frc.team4729.robot.commands.OneStickTank;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
@@ -30,6 +29,7 @@ public class OI {
 	 * toteTilt is 3
 	 * aFrameWinch is 4
 	 */
+	
 	/* Digital In:
 	 * Tote or bin switch is 0
 	 * Ramp or no switch is 1
@@ -37,11 +37,14 @@ public class OI {
 	 * Left Encoders are 3 and 4
 	 * Right Encoders are 5 and 6
 	 */
+	
 	/*Analog In:
 	 * tiltPot is 0
 	 * clampPot is 1
 	 * emuPot is 2
 	 */
+	
+	//All non-local constants are in the HashDefine subsystem
 	Joystick leftStick   = new Joystick(0);
     Joystick rightStick  = new Joystick(1);
     Joystick xbox        = new Joystick(2);
@@ -73,8 +76,8 @@ public class OI {
     Button y             = new JoystickButton(xbox,       4);
     Button lb            = new JoystickButton(xbox,       5);
     Button rb            = new JoystickButton(xbox,       6);
-    Button L3            = new JoystickButton(xbox,       9);
-    Button R3            = new JoystickButton(xbox,       10);
+    Button l3            = new JoystickButton(xbox,       9);
+    Button r3            = new JoystickButton(xbox,       10);
     
     public OI() {
     	button1.whileHeld (new BottomPotTest());
@@ -97,16 +100,16 @@ public class OI {
     	//rightButton7.whileHeld ();
     	//rightButton8.whileHeld ();
     	//rightButton9.whileHeld ();
-    	//rightButton10.whenPressed (new AutoToManual());
-    	//rightButton11.whenPressed (new ManualToAuto());
+    	//rightButton10.whileHeld ();
+    	//rightButton11.whileHeld ();
     	a.whileHeld (new ToteTiltManualDown());
     	b.whileHeld (new ToteClampManualUp());
     	x.whileHeld (new ToteClampManualDown());
     	y.whileHeld (new ToteTiltManualUp());
     	lb.whileHeld (new EmuWinchManualDown());
     	rb.whileHeld (new EmuWinchManualUp());
-    	L3.whileHeld (new AutoToManual());
-    	R3.whileHeld (new ManualToAuto());
+    	l3.whileHeld (new AutoToManual());
+    	r3.whileHeld (new ManualToAuto());
     	
     	
     }

@@ -12,6 +12,8 @@ public class ToteClampManualDown extends Command {
 
     public ToteClampManualDown() {
     	requires(Robot.toteClamp);
+    	requires(Robot.manualOrAuto);
+    	requires(Robot.hashDefine);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -23,10 +25,10 @@ public class ToteClampManualDown extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putString("Tote Clamp Manual State", "Going Down");
-    	if (Robot.manual) {
+    	if (Robot.manualOrAuto.readManualState()) {
     		Robot.toteClamp.moveDown();
     	} else {
-    		while (Robot.toteClamp.readClampPot() > Robot.TOTE_CLAMP_DOWN_ANGLE) {
+    		while (Robot.toteClamp.readClampPot() > Robot.hashDefine.toteClampDownAngle()) {
     			Robot.toteClamp.moveDown();
     		}
     	}

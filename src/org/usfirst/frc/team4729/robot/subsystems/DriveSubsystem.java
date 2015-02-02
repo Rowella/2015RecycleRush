@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSubsystem extends Subsystem {
 	RobotDrive driveTrain = new RobotDrive(0, 1);
-	//Encoder leftEncoder = new Encoder(3, 4);
-	//Encoder rightEncoder = new Encoder(5, 6);
+	Encoder leftEncoder = new Encoder(3, 4);
+	Encoder rightEncoder = new Encoder(5, 6);
 	static double rightOffset = 1;
 	static double leftOffset = 1;
 	
@@ -20,23 +20,23 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
+    	leftEncoder.setDistancePerPulse(1);
+    	rightEncoder.setDistancePerPulse(1);
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
     
     public int readLeftEncoder() {
-    	//return leftEncoder.get();
-    	return 0;
+    	return leftEncoder.get();
     }
     
     public int readRightEncoder() {
-    	//return rightEncoder.get();
-    	return 0;
+    	return rightEncoder.get();
     }
     
     public void resetEncoders() {
-    	//leftEncoder.reset();
-    	//rightEncoder.reset();
+    	leftEncoder.reset();
+    	rightEncoder.reset();
     }
     
     public void twoStickArcade(Joystick leftStick, Joystick rightStick) {

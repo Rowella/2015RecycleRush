@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ToteClamp extends Subsystem {
 	Talon toteClamp = new Talon(2);
 	Potentiometer clampPot = new AnalogPotentiometer(1);
-	DigitalInput toteSensor = new DigitalInput(3);
+	DigitalInput toteSensor = new DigitalInput(2);
 	static double MANUAL_TOTE_CLAMP_SPEED = 0.5;
 	
     // Put methods for controlling this subsystem
