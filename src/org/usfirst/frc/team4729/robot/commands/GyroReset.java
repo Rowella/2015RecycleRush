@@ -2,20 +2,15 @@ package org.usfirst.frc.team4729.robot.commands;
 
 import org.usfirst.frc.team4729.robot.Robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ChangeOffsets extends Command {
-	Joystick leftStick;
-	Joystick rightStick;
+public class GyroReset extends Command {
 
-    public ChangeOffsets(Joystick leftStick, Joystick rightStick) {
+    public GyroReset() {
     	requires(Robot.driveSubsystem);
-    	this.leftStick = leftStick;
-    	this.rightStick = rightStick;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -26,9 +21,7 @@ public class ChangeOffsets extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//Robot.driveSubsystem.OffsetChange(leftStick, rightStick);
-    	//Robot.driveSubsystem.resetEncoders();
-    	return;
+    	Robot.driveSubsystem.resetGryo();
     }
 
     // Make this return true when this Command no longer needs to run execute()

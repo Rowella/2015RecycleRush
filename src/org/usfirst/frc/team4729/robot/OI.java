@@ -9,6 +9,7 @@ import org.usfirst.frc.team4729.robot.commands.EmuWinchManualDown;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualUp;
 import org.usfirst.frc.team4729.robot.commands.AutoToManual;
 import org.usfirst.frc.team4729.robot.commands.BottomPotTest;
+import org.usfirst.frc.team4729.robot.commands.GreasyDrive;
 import org.usfirst.frc.team4729.robot.commands.ManualToAuto;
 import org.usfirst.frc.team4729.robot.commands.ToteClampManualDown;
 import org.usfirst.frc.team4729.robot.commands.ToteClampManualUp;
@@ -43,6 +44,7 @@ public class OI {
 	 * tiltPot is 0
 	 * clampPot is 1
 	 * emuPot is 2
+	 * gyro is 3
 	 */
 	
 	//All non-local constants are in the HashDefine subsystem
@@ -92,9 +94,9 @@ public class OI {
     	//button9.whileHeld ();
     	//button10.whileHeld ();
     	//button11.whileHeld ();
-    	rightButton1.whenPressed (new ChangeOffsets(leftStick, rightStick));
+    	//rightButton1.whenPressed (new ChangeOffsets(leftStick, rightStick));
     	//rightButton2.whileHeld ();
-    	//rightButton3.whileHeld ();
+    	rightButton3.whenPressed (new GreasyDrive(leftStick));
     	//rightButton4.whileHeld ();
     	//rightButton5.whileHeld ();
     	//rightButton6.whileHeld ();
