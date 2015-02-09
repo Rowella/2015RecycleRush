@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -27,11 +28,15 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public int readLeftEncoder() {
-    	return leftEncoder.get();
+    	int leftValue = leftEncoder.get();
+    	SmartDashboard.putNumber("Left Encoder", leftValue);
+    	return leftValue;
     }
     
     public int readRightEncoder() {
-    	return rightEncoder.get();
+    	int rightValue = rightEncoder.get();
+    	SmartDashboard.putNumber("Right Encoder", rightValue);
+    	return rightValue;
     }
     
     public void resetEncoders() {
@@ -57,7 +62,27 @@ public class DriveSubsystem extends Subsystem {
 	
 	public void autoTank (double leftSpeed, double rightSpeed) {
 		driveTrain.tankDrive(leftSpeed, rightSpeed);
-	}	
+	}
+	
+	public void OffsetChange(Joystick leftStick, Joystick rightStick) {
+		int leftValue = (int) (leftEncoder.get()*leftStick.getY());
+		int rightValue = (int) (rightEncoder.get()*rightStick.getY());
+    	SmartDashboard.putNumber("Left Encoder", leftValue);
+		SmartDashboard.putNumber("Right Encoder", rightValue);
+		
+		if (leftValue > rightValue){
+			leftOffset *= leftValue/rightValue;
+		}else {
+			rightOffset *= rightValue/leftValue;
+		}
+		if (leftOffset > rightOffset) {
+			leftOffset *= rightOffset;
+			rightOffset = 1;
+		} else {
+			rightOffset *= leftOffset;
+			leftOffset = 1;
+		}
+	}
 
 }
 

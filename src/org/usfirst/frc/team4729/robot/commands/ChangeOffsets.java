@@ -2,16 +2,20 @@ package org.usfirst.frc.team4729.robot.commands;
 
 import org.usfirst.frc.team4729.robot.Robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ManualToAuto extends Command {
+public class ChangeOffsets extends Command {
+	Joystick leftStick;
+	Joystick rightStick;
 
-    public ManualToAuto() {
-    	requires(Robot.manualOrAuto);
+    public ChangeOffsets(Joystick leftStick, Joystick rightStick) {
+    	requires(Robot.driveSubsystem);
+    	this.leftStick = leftStick;
+    	this.rightStick = rightStick;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -20,11 +24,11 @@ public class ManualToAuto extends Command {
     protected void initialize() {
     }
 
-    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.manualOrAuto.changeToAuto();
-    	SmartDashboard.putBoolean("Manual", false);
+    	Robot.driveSubsystem.OffsetChange(leftStick, rightStick);
+    	Robot.driveSubsystem.resetEncoders();
+    	return;
     }
 
     // Make this return true when this Command no longer needs to run execute()

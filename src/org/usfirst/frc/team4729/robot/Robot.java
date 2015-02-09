@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static final HashDefine hashDefine = new HashDefine();
 	public static OI oi;
 
+	
     Command autonomousCommand;
 
     /**

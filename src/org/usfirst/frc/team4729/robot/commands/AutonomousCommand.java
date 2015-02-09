@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class AutonomousCommand extends Command {
+	//All constants are in HashDefine
 	Timer timer = new Timer();
 	
 	public static boolean toteOrNo = false;

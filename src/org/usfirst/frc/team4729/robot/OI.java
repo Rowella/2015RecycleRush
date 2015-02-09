@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team4729.robot.commands.ChangeOffsets;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualDown;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualUp;
 import org.usfirst.frc.team4729.robot.commands.AutoToManual;
@@ -91,7 +92,7 @@ public class OI {
     	//button9.whileHeld ();
     	//button10.whileHeld ();
     	//button11.whileHeld ();
-    	//rightButton1.whileHeld ();
+    	rightButton1.whenPressed (new ChangeOffsets(leftStick, rightStick));
     	//rightButton2.whileHeld ();
     	//rightButton3.whileHeld ();
     	//rightButton4.whileHeld ();
