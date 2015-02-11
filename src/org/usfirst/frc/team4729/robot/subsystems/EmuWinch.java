@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class EmuWinch extends Subsystem {
 	Talon emuWinch = new Talon(4);
 	Potentiometer emuPot = new AnalogPotentiometer(2);
-	static double MANUAL_EMU_WINCH_SPEED = 0.5;
+	static double MANUAL_EMU_WINCH_SPEED = 1;
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

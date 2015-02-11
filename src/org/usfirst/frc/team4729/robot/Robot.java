@@ -12,6 +12,7 @@ import org.usfirst.frc.team4729.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.EmuWinch;
 import org.usfirst.frc.team4729.robot.subsystems.HashDefine;
+import org.usfirst.frc.team4729.robot.subsystems.LEDs;
 import org.usfirst.frc.team4729.robot.subsystems.ManualOrAuto;
 import org.usfirst.frc.team4729.robot.subsystems.Switches;
 import org.usfirst.frc.team4729.robot.subsystems.ToteClamp;
@@ -31,14 +32,15 @@ public class Robot extends IterativeRobot {
 	Joystick rightStick = new Joystick(1);
 	
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public static final ToteTilt toteTilt = new ToteTilt();
-	public static final ToteClamp toteClamp = new ToteClamp();
-	public static final EmuWinch emuWinch = new EmuWinch(); 
-	public static final Switches switches = new Switches();
-	public static final ManualOrAuto manualOrAuto = new ManualOrAuto();
-	public static final HashDefine hashDefine = new HashDefine();
+	public static  ExampleSubsystem exampleSubsystem;
+	public static  DriveSubsystem driveSubsystem;
+	public static  ToteTilt toteTilt;
+	public static  ToteClamp toteClamp;
+	public static  EmuWinch emuWinch; 
+	public static  Switches switches;
+	public static  ManualOrAuto manualOrAuto;
+	public static  HashDefine hashDefine;
+	public static  LEDs leds;
 	public static OI oi;
 
 	
@@ -49,6 +51,15 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	exampleSubsystem = new ExampleSubsystem();
+    	driveSubsystem = new DriveSubsystem();
+    	toteTilt = new ToteTilt();
+    	toteClamp = new ToteClamp();
+    	emuWinch = new EmuWinch(); 
+    	switches = new Switches();
+    	manualOrAuto = new ManualOrAuto();
+    	hashDefine = new HashDefine();
+    	leds = new LEDs();
 		System.out.println("Before OI");
     	oi = new OI();
     	System.out.println("After OI");

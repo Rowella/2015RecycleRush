@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team4729.robot.commands.ChangeOffsets;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualDown;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualUp;
 import org.usfirst.frc.team4729.robot.commands.AutoToManual;
@@ -29,9 +28,9 @@ public class OI {
 	 * driveBase left is 0, right is 1
 	 * toteClamp is 2
 	 * toteTilt is 3
-	 * aFrameWinch is 4
+	 * emuWinch is 4
 	 */
-	
+
 	/* Digital In:
 	 * Tote or bin switch is 0
 	 * Ramp or no switch is 1
@@ -41,10 +40,10 @@ public class OI {
 	 */
 	
 	/*Analog In:
-	 * tiltPot is 0
+	 * gyro is 0
 	 * clampPot is 1
 	 * emuPot is 2
-	 * gyro is 3
+	 * tiltPot is 3
 	 */
 	
 	//All non-local constants are in the HashDefine subsystem
