@@ -2,6 +2,7 @@ package org.usfirst.frc.team4729.robot.commands;
 
 import org.usfirst.frc.team4729.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -9,11 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class EmuWinchManualDown extends Command {
-
+Timer timer = new Timer();
     public EmuWinchManualDown() {
     	requires(Robot.emuWinch);
-    	requires(Robot.manualOrAuto);
-    	requires(Robot.hashDefine);
+    	//requires(Robot.manualOrAuto);
+    	//requires(Robot.hashDefine);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -25,10 +26,10 @@ public class EmuWinchManualDown extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 		SmartDashboard.putString("A Frame Winch Manual State", "Going Down");
-    	if (Robot.manualOrAuto.readManualState()) {
+    	if (Robot.manual) {
     		Robot.emuWinch.moveDown();
     	} else {
-    		while (Robot.emuWinch.emuPotRead() > Robot.hashDefine.emuDownAngle()){
+    		while (Robot.emuWinch.emuPotRead() < Robot.EMU_DOWN_ANGLE){
     			Robot.emuWinch.moveDown();
     		}
     	}

@@ -56,7 +56,7 @@ public class GreasyDrive extends Command {
     	SmartDashboard.putString("H", ":(");
     	SmartDashboard.putString("Y", ":(");
     	SmartDashboard.putString("P", ":(");
-    	SmartDashboard.putString("E", ":(");
+    	SmartDashboard.putString("e", ":(");
     	SmartDashboard.putString("!", ":(");
     }
 }

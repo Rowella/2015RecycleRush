@@ -12,8 +12,8 @@ public class ToteTiltManualDown extends Command {
 
     public ToteTiltManualDown() {
     	requires(Robot.toteTilt);
-    	requires(Robot.manualOrAuto);
-    	requires(Robot.hashDefine);
+    	//requires(Robot.manualOrAuto);
+    	//requires(Robot.hashDefine);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -25,10 +25,10 @@ public class ToteTiltManualDown extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putString("Tote Tilt Manual State", "Going Down");
-    	if(Robot.manualOrAuto.readManualState()) {
+    	if(Robot.manual) {
     		Robot.toteTilt.moveDown();
     	} else {
-    		while (Robot.toteTilt.readTiltPot() > Robot.hashDefine.toteTiltDownAngle()) {
+    		while (Robot.toteTilt.readTiltEncoder() > Robot.TOTE_TILT_DOWN_ANGLE) {
     			Robot.toteTilt.moveDown();
     		}
     	}

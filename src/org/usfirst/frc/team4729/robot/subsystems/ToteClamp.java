@@ -24,12 +24,8 @@ public class ToteClamp extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public double readClampPot() {
-    	SmartDashboard.putNumber("clampPot", clampPot.get());
-    	return clampPot.get();
-	}
-    
     public boolean readToteSensor() {
+    	SmartDashboard.putBoolean("Tote Button", toteSensor.get());
     	return toteSensor.get();
     }
     

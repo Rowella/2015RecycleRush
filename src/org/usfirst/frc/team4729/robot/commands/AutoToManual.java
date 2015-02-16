@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoToManual extends Command {
 
     public AutoToManual() {
-    	requires(Robot.manualOrAuto);
+    	//requires(Robot.manualOrAuto);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,7 +22,7 @@ public class AutoToManual extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.manualOrAuto.changeToManual();
+    	Robot.manual = true;
     	SmartDashboard.putBoolean("Manual", true);
     }
 

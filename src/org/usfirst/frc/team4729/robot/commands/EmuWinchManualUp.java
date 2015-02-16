@@ -12,8 +12,8 @@ public class EmuWinchManualUp extends Command {
 
     public EmuWinchManualUp() {
     	requires(Robot.emuWinch);
-    	requires(Robot.manualOrAuto);
-    	requires(Robot.hashDefine);
+    	//requires(Robot.manualOrAuto);
+    	//requires(Robot.hashDefine);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -25,10 +25,10 @@ public class EmuWinchManualUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putString("A Frame Winch Manual State", "Going Up");
-    	if (Robot.manualOrAuto.readManualState()) {
+    	if (Robot.manual) {
     		Robot.emuWinch.moveUp();
     	} else {
-    		while (Robot.emuWinch.emuPotRead() < Robot.hashDefine.emuUpAngle()) {
+    		while (Robot.emuWinch.emuPotRead() > Robot.EMU_UP_ANGLE) {
     			Robot.emuWinch.moveUp();
     		}
     	}

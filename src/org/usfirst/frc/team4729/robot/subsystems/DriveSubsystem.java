@@ -15,7 +15,7 @@ public class DriveSubsystem extends Subsystem {
 	RobotDrive driveTrain = new RobotDrive(0, 1);
 	Encoder leftEncoder = new Encoder(3, 4);
 	Encoder rightEncoder = new Encoder(5, 6);
-	//Gyro gyro = new Gyro(3);
+	Gyro gyro = new Gyro(0);
 	static double rightOffset = 1;
 	static double leftOffset = 1;
 	
@@ -111,13 +111,14 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void greasyDrive(Joystick stick){
-//		if (gyro.getAngle() < Math.atan2(stick.getY(), stick.getX()) - 15){
-//			driveTrain.arcadeDrive(0, Math.min(Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)), 1));
-//		} else if (gyro.getAngle() > Math.atan2(stick.getY(), stick.getX()) + 15){
-//			driveTrain.arcadeDrive(0, Math.max(-Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)), -1));
-//		} else{
-//			driveTrain.tankDrive(Math.min(1, Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)))/leftOffset, Math.min(1, Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)))/rightOffset);
-//		}
+		SmartDashboard.putNumber("Gryo", gyro.getAngle());
+		if (gyro.getAngle()/5 < (Math.atan2(stick.getY(), stick.getX()) - 15)/360){
+			driveTrain.arcadeDrive(0, Math.min(Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)), 1));
+		} else if (gyro.getAngle()/5 > (Math.atan2(stick.getY(), stick.getX()) + 15)/360){
+			driveTrain.arcadeDrive(0, Math.max(-Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)), -1));
+		} else{
+			driveTrain.tankDrive(Math.min(1, Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)))/leftOffset, Math.min(1, Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)))/rightOffset);
+		}
 	}
 	
 	

@@ -9,11 +9,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team4729.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.EmuWinch;
-import org.usfirst.frc.team4729.robot.subsystems.HashDefine;
+//import org.usfirst.frc.team4729.robot.subsystems.HashDefine;
 import org.usfirst.frc.team4729.robot.subsystems.LEDs;
-import org.usfirst.frc.team4729.robot.subsystems.ManualOrAuto;
+//import org.usfirst.frc.team4729.robot.subsystems.ManualOrAuto;
 import org.usfirst.frc.team4729.robot.subsystems.Switches;
 import org.usfirst.frc.team4729.robot.subsystems.ToteClamp;
 import org.usfirst.frc.team4729.robot.subsystems.ToteTilt;
@@ -38,10 +39,19 @@ public class Robot extends IterativeRobot {
 	public static  ToteClamp toteClamp;
 	public static  EmuWinch emuWinch; 
 	public static  Switches switches;
-	public static  ManualOrAuto manualOrAuto;
-	public static  HashDefine hashDefine;
+	//public static  ManualOrAuto manualOrAuto;
+	//public static  HashDefine hashDefine;
 	public static  LEDs leds;
 	public static OI oi;
+	
+	public static boolean manual = true;
+	//This is where all of the constants are placed
+	
+	final public static double TOTE_TILT_UP_ANGLE = 380;
+	final public static double TOTE_TILT_DOWN_ANGLE = 100;
+	final public static double EMU_UP_ANGLE = 0.074;
+	final public static double EMU_DOWN_ANGLE = 0.084;
+	
 
 	
     Command autonomousCommand;
@@ -57,14 +67,14 @@ public class Robot extends IterativeRobot {
     	toteClamp = new ToteClamp();
     	emuWinch = new EmuWinch(); 
     	switches = new Switches();
-    	manualOrAuto = new ManualOrAuto();
-    	hashDefine = new HashDefine();
+    	//manualOrAuto = new ManualOrAuto();
+    	//hashDefine = new HashDefine();
     	leds = new LEDs();
 		System.out.println("Before OI");
     	oi = new OI();
     	System.out.println("After OI");
         // instantiate the command used for the autonomous period
-        autonomousCommand = new AutonomousCommand(hashDefine.toteClampUpAngle(), hashDefine.toteTiltUpAngle(), hashDefine.emuUpAngle());//TOTE_CLAMP_UP_ANGLE, TOTE_TILT_UP_ANGLE, EMU_UP_ANGLE);
+        autonomousCommand = new AutonomousCommand(TOTE_TILT_UP_ANGLE, EMU_UP_ANGLE);//TOTE_CLAMP_UP_ANGLE, TOTE_TILT_UP_ANGLE, EMU_UP_ANGLE);
     }
 	
 	public void disabledPeriodic() {
@@ -89,7 +99,10 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-		
+        Joystick leftStick = new Joystick(0);
+        Joystick rightStick = new Joystick(1);
+        TwoStickArcade twoStickArcade = new TwoStickArcade(leftStick, rightStick);
+		twoStickArcade.start();
     }
 
     /**

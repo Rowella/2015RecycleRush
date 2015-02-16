@@ -4,10 +4,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team4729.robot.commands.ClampReadValue;
+import org.usfirst.frc.team4729.robot.commands.EmuReadValue;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualDown;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualUp;
 import org.usfirst.frc.team4729.robot.commands.AutoToManual;
-import org.usfirst.frc.team4729.robot.commands.BottomPotTest;
+import org.usfirst.frc.team4729.robot.commands.LedForward;
+import org.usfirst.frc.team4729.robot.commands.TiltReadValue;
 import org.usfirst.frc.team4729.robot.commands.GreasyDrive;
 import org.usfirst.frc.team4729.robot.commands.ManualToAuto;
 import org.usfirst.frc.team4729.robot.commands.ToteClampManualDown;
@@ -24,11 +27,15 @@ import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	//NOTE: Emu Winch uses potentiometers ( :) ), Tote Tilt uses Encoders ( :| ) which means it must be in the up state at init and Tote Clamp uses a switch ( >:( ) which means that it cannot use auto to move up
+	
 	/* PWM:
 	 * driveBase left is 0, right is 1
 	 * toteClamp is 2
 	 * toteTilt is 3
 	 * emuWinch is 4
+	 * LED A is 5
+	 * LED B is 6
 	 */
 
 	/* Digital In:
@@ -37,16 +44,19 @@ public class OI {
 	 * Tote Sensor is 2
 	 * Left Encoders are 3 and 4
 	 * Right Encoders are 5 and 6
+	 * Tote Tilt Encoders are 7 and 8
 	 */
 	
 	/*Analog In:
 	 * gyro is 0
-	 * clampPot is 1
+	 * IGNORE clampPot is 1
 	 * emuPot is 2
-	 * tiltPot is 3
+	 * IGNORE tiltPot is 3
+	 * 
 	 */
 	
-	//All non-local constants are in the HashDefine subsystem
+	//All non-local constants are at the top of Robot.java
+	//Speeds for the emu/tote tilt/tote clamp are in their respective files
 	Joystick leftStick   = new Joystick(0);
     Joystick rightStick  = new Joystick(1);
     Joystick xbox        = new Joystick(2);
@@ -82,7 +92,7 @@ public class OI {
     Button r3            = new JoystickButton(xbox,       10);
     
     public OI() {
-    	button1.whileHeld (new BottomPotTest());
+    	button1.whileHeld  (new LedForward());
     	button2.whenPressed (new OneStickTank(leftStick));
     	button3.whenPressed (new TwoStickTank(leftStick, rightStick));
     	button4.whenPressed (new OneStickArcade(leftStick));
@@ -98,9 +108,9 @@ public class OI {
     	rightButton3.whenPressed (new GreasyDrive(leftStick));
     	//rightButton4.whileHeld ();
     	//rightButton5.whileHeld ();
-    	//rightButton6.whileHeld ();
-    	//rightButton7.whileHeld ();
-    	//rightButton8.whileHeld ();
+    	rightButton6.whileHeld (new ClampReadValue());
+    	rightButton7.whileHeld (new TiltReadValue());
+    	rightButton8.whileHeld (new EmuReadValue());
     	//rightButton9.whileHeld ();
     	//rightButton10.whileHeld ();
     	//rightButton11.whileHeld ();

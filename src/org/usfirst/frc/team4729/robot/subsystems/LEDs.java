@@ -2,13 +2,15 @@ package org.usfirst.frc.team4729.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
 public class LEDs extends Subsystem {
-	Talon leds = new Talon(5);
+	Victor ledA = new Victor(5);
+	Victor ledB = new Victor(6);
 	Timer timer = new Timer();
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -20,32 +22,47 @@ public class LEDs extends Subsystem {
     
     public void cycleForward(){
     	timer.reset();
-    	double i = 0;
-    	while (i < 1){
-    		i = timer.get()/5;
-    		leds.set(i);
+    	double ledBValue = 0;
+    	double ledAValue = 0;
+    	ledB.set(ledBValue);
+    	while (ledAValue < 1){
+    		ledAValue = timer.get()/5;
+    		ledA.set(ledAValue);
     	}
+    	ledA.set(1);
     	timer.reset();
-    	i = 0;
-    	while (i > -1){
-    		i = -timer.get()/5;
-    		leds.set(i);
+    	while (ledBValue < 1) {
+    		ledBValue = timer.get()/5;
+    		ledB.set(ledBValue);
+    	}
+    	ledB.set(1);
+    	ledAValue = 1;
+    	while (ledAValue > -1){
+    		ledAValue = 1-timer.get()/2.5;
+    		ledA.set(ledAValue);
+    	}
+    	ledA.set(-1);
+    	ledBValue = 1;
+    	while (ledBValue > -1){
+    		ledBValue = 1-timer.get()/2.5;
+    		ledB.set(ledBValue);
     	}
     }
     
-    public void cycleBack(){
+    /*public void cycleBack(){
     	timer.reset();
-    	double i = 0;
-    	while (i > -1){
-    		i = -timer.get()/5;
-    		leds.set(i);
+    	double ledAValue = 0;
+    	while (ledAValue > -1){
+    		ledAValue = -timer.get()/5;
+    		ledA.set(ledAValue);
     	}
     	timer.reset();
-    	i = 0;
-    	while(i < 1){
-    		i = timer.get()/5;
-    		leds.set(i);
+    	ledAValue = 0;
+    	while(ledAValue < 1){
+    		ledAValue = timer.get()/5;
+    		ledA.set(ledAValue);
     	}
-    }
+    }*/
+    
 }
 

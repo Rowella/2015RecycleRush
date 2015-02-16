@@ -14,25 +14,27 @@ public class AutonomousCommand extends Command {
 	//All constants are in HashDefine
 	Timer timer = new Timer();
 	
+	final static int RAMP_DISTANCE = 100;
+	final static int NO_RAMP_DISTANCE = 0;
+	final static double AUTO_SPEED = 0.65;
+	
 	public static boolean toteOrNo = false;
 	public static boolean rampOrNo = false;
 	
 	
-	double clampUp;
 	double tiltUp;
 	double emuUp;
 	SendableChooser toteChooser = new SendableChooser();
 	SendableChooser rampChooser = new SendableChooser();
 	
 	
-    public AutonomousCommand(double clampUp, double tiltUp, double emuUp) {
+    public AutonomousCommand(double tiltUp, double emuUp) {
     	requires(Robot.driveSubsystem);
     	requires(Robot.toteClamp);
     	requires(Robot.toteTilt);
     	requires(Robot.emuWinch);
     	requires(Robot.switches);
-    	requires(Robot.hashDefine);
-    	this.clampUp = clampUp;
+    	//requires(Robot.hashDefine);
     	this.tiltUp = tiltUp;
     	this.emuUp = emuUp;
         // Use requires() here to declare subsystem dependencies
@@ -60,19 +62,19 @@ public class AutonomousCommand extends Command {
     	
     	if (toteOrNo) { //Going for tote
     		Robot.toteClamp.moveDown();
-    		while (Robot.toteClamp.readClampPot() < clampUp);
+    		while (!Robot.toteClamp.readToteSensor());
     		Robot.toteClamp.stop();
     		Robot.toteTilt.moveUp();
-    		while (Robot.toteTilt.readTiltPot() < tiltUp); //wait until tote is fully up
+    		while (Robot.toteTilt.readTiltEncoder() < tiltUp); //wait until tote is fully up
     		Robot.toteTilt.stop();
     		timer.reset();
         	timer.start();
-    		Robot.driveSubsystem.autoTank(Robot.hashDefine.autoSpeed(), Robot.hashDefine.autoSpeed());
+    		Robot.driveSubsystem.autoTank(AUTO_SPEED, AUTO_SPEED);
     		if (rampOrNo) { //Going across ramp
-    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < Robot.hashDefine.rampDistance());
+    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < RAMP_DISTANCE);
     		}
     		else { //Not going across ramp
-    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < Robot.hashDefine.noRampDistance());
+    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < NO_RAMP_DISTANCE);
     		}
     	}
     
@@ -82,12 +84,12 @@ public class AutonomousCommand extends Command {
     		Robot.emuWinch.stop();
     		timer.reset();
         	timer.start();
-        	Robot.driveSubsystem.autoTank(Robot.hashDefine.autoSpeed(), Robot.hashDefine.autoSpeed());
+        	Robot.driveSubsystem.autoTank(AUTO_SPEED, AUTO_SPEED);
     		if (rampOrNo) { //Going across ramp
-    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < Robot.hashDefine.rampDistance());
+    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < RAMP_DISTANCE);
     		}
     		else {
-    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < Robot.hashDefine.noRampDistance());
+    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < NO_RAMP_DISTANCE);
     		}
     	}
 		Robot.driveSubsystem.autoTank(0, 0);

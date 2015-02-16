@@ -8,12 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ToteTiltManualUp extends Command {
+public class TiltReadValue extends Command {
 
-    public ToteTiltManualUp() {
-    	requires(Robot.toteTilt);
-    	//requires(Robot.manualOrAuto);
-    	//requires(Robot.hashDefine);
+    public TiltReadValue() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -24,14 +21,7 @@ public class ToteTiltManualUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putString("Tote Tilt Manual State", "Going Up");
-    	if (Robot.manual) {
-    		Robot.toteTilt.moveUp();
-    	} else {
-    		while (Robot.toteTilt.readTiltEncoder() < Robot.TOTE_TILT_UP_ANGLE) {
-    			Robot.toteTilt.moveUp();
-    		}
-    	}
+    	Robot.toteTilt.readTiltEncoder();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -41,13 +31,10 @@ public class ToteTiltManualUp extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.toteTilt.stop();
-    	SmartDashboard.putString("Tote Tilt Manual State", "Inactive");
     }
 }
