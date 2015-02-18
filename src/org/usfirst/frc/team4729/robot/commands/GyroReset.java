@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GyroReset extends Command {
 
     public GyroReset() {
-    	requires(Robot.driveSubsystem);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

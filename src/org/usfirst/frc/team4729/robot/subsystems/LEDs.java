@@ -12,6 +12,7 @@ public class LEDs extends Subsystem {
 	Victor ledA = new Victor(5);
 	Victor ledB = new Victor(6);
 	Timer timer = new Timer();
+	static int counter = 0;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -20,32 +21,33 @@ public class LEDs extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
+    public void counterReset(){
+    	counter = 0;
+    }
+    
     public void cycleForward(){
-    	timer.reset();
-    	double ledBValue = 0;
-    	double ledAValue = 0;
-    	ledB.set(ledBValue);
-    	while (ledAValue < 1){
-    		ledAValue = timer.get()/5;
-    		ledA.set(ledAValue);
+    	counter++;
+    	if (counter > 90) {
+    		counter = 0;
     	}
-    	ledA.set(1);
-    	timer.reset();
-    	while (ledBValue < 1) {
-    		ledBValue = timer.get()/5;
-    		ledB.set(ledBValue);
-    	}
-    	ledB.set(1);
-    	ledAValue = 1;
-    	while (ledAValue > -1){
-    		ledAValue = 1-timer.get()/2.5;
-    		ledA.set(ledAValue);
-    	}
-    	ledA.set(-1);
-    	ledBValue = 1;
-    	while (ledBValue > -1){
-    		ledBValue = 1-timer.get()/2.5;
-    		ledB.set(ledBValue);
+    	if (counter <= 10){
+    		ledA.set(0);
+    		ledB.set(counter/10);
+    	} else if (counter <= 20){
+    		ledA.set((counter-10)/10);
+    		ledB.set(1);
+    	} else if (counter <= 40){
+    		ledA.set(1);
+    		ledB.set(1-(counter-20)/10);
+    	} else if (counter <= 60){
+    		ledA.set(1-(counter-40)/10);
+    		ledB.set(-1);
+    	} else if (counter <= 80){
+    		ledA.set(-1);
+    		ledB.set(-1+(counter-60)/10);
+    	} else if (counter <= 90){
+    		ledA.set(-1+(counter-80)/10);
+    		ledB.set(1-(counter-80)/10);
     	}
     }
     

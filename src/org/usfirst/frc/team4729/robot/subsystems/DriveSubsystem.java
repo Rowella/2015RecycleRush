@@ -24,10 +24,16 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
+    	gyro.initGyro();
     	//leftEncoder.setDistancePerPulse(1);
     	//rightEncoder.setDistancePerPulse(1);
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+    
+    public void gyroStart() {
+    	gyro.initGyro();
+    	
     }
     
    public int readLeftEncoder() {
@@ -48,7 +54,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void resetGryo(){
-    //	gyro.initGyro();
+    	gyro.initGyro();
     }
     
     public void twoStickArcade(Joystick leftStick, Joystick rightStick) {
@@ -112,9 +118,9 @@ public class DriveSubsystem extends Subsystem {
 	
 	public void greasyDrive(Joystick stick){
 		SmartDashboard.putNumber("Gryo", gyro.getAngle());
-		if (gyro.getAngle()/5 < (Math.atan2(stick.getY(), stick.getX()) - 15)/360){
+		if (gyro.getAngle() < (Math.toDegrees(Math.atan2(stick.getY(), stick.getX())) - 15)){
 			driveTrain.arcadeDrive(0, Math.min(Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)), 1));
-		} else if (gyro.getAngle()/5 > (Math.atan2(stick.getY(), stick.getX()) + 15)/360){
+		} else if (gyro.getAngle() > (Math.toDegrees(Math.atan2(stick.getY(), stick.getX())) + 15)){
 			driveTrain.arcadeDrive(0, Math.max(-Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)), -1));
 		} else{
 			driveTrain.tankDrive(Math.min(1, Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)))/leftOffset, Math.min(1, Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)))/rightOffset);
