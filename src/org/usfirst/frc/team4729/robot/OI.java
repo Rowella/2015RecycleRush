@@ -22,13 +22,44 @@ import org.usfirst.frc.team4729.robot.commands.OneStickTank;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 
-/**
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
+//I will not be there on the Thurs of the comp, contact me at alex+FRC@gormand.com.au from 8:45-10:00 and possibly 1:00-2:00 (I may have 4u maths on at that time)
+
+/**Info for Driving
+ * abbreviations:
+ * 	f = forward
+ *  b = back (Except for the button 'b' on the XBOX controller)
+ *  l = left
+ *  r = right
+ */
+/*LeftStick:
+ * 	1 (trigger) is for cycling the LEDs (hold to cycle)
+ * 	2 is for OneStickTank (f/b on leftStick is left drive f/b, l/r on leftStick is right drive f/b)
+ * 	3 is for twoStickTank (f/b on leftStick is left drive f/b, f/b on rightStick is right drive f/b)
+ * 	4 is for oneStickArcade (f/b on leftStick is for both drive f/b, l/r on leftStick is for turn l/r)
+ * 	5 is for twoStickArcade (f/b on leftStick is for both drive f/b, l/r on rightStick is for turn l/r)
+ *
+ *RightStick:
+ *	3 is for greasyDrive (If you don't know it you don't deserve it)
+ *	6 is for displaying the value of the toteClamp to the smartDashboard for testing purposes
+ *	7 is for displaying the value of the toteTilt to the smartDashboard for testing purposes
+ *	8 if for displaying the value of the emu to the smartDashboard for testing purposes
+ *
+ *XBOX Controller:
+ *	Pressing in leftStick sets most controls to manual mode
+ *	Pressing in rightStick sets most controls to semi-auto mode
+ *	a moves the toteTilt down (auto keeps going until it reaches the right point)
+ *	y moves the toteTilt up (auto keeps going until it reaches the right point) HAS NOT BEEN CALIBRATED YET
+ *	x moves the toteClamp down (auto keeps going until the button is hit [The clamp hits a tote]) AUTO NOT TESTED YET
+ *	b moves the toteClamp up (auto acts like manual)
+ *	lb moves the emu down (auto moves it down to the right point)
+ *	rb moves the emu up (auto moves it down to the right point)
+ *	
  */
 public class OI {
 	//NOTE: Emu Winch uses potentiometers ( :) ), Tote Tilt uses Encoders ( :| ) which means it must be in the up state at init and Tote Clamp uses a switch ( >:( ) which means that it cannot use auto to move up
 	
+	/** Wiring
+	 */
 	/* PWM:
 	 * driveBase left is 0, right is 1
 	 * toteClamp is 2
@@ -49,14 +80,34 @@ public class OI {
 	
 	/*Analog In:
 	 * gyro is 0
-	 * IGNORE clampPot is 1
+	 * clampPot is 1 IGNORE: NO LONGER USED
 	 * emuPot is 2
-	 * IGNORE tiltPot is 3
+	 * tiltPot is 3 IGNORE: NO LONGER USED
 	 * 
 	 */
 	
-	//All non-local constants are at the top of Robot.java
-	//Speeds for the emu/tote tilt/tote clamp are in their respective files
+	/** Constants
+	 */
+	/*All non-local constants are at the top of Robot.java
+	 *Speeds for the emu/toteTilt/toteClamp are in their respective files
+	 *Things to calibrate:
+	 *	EMU_UP_ANGLE (in Robot) DONE
+	 *	EMU_DOWN_ANGLE (in Robot) DONE
+	 *	TOTE_TILT_UP_ANGLE (In Robot)
+	 *	TOTE_TILT_DOWN_ANGLE (In Robot)
+	 *	RAMP_DISTANCE (In AutonomousCommand)
+	 *	NO_RAMP_DISTANCE (In AutonomousCommand)
+	 *
+	 *Things you might want to change:
+	 *	AUTO_SPEED (In AutonomousCommand)
+	 *	MANUAL_EMU_WINCH_SPEED (In EmuWinch, note this also affects autonomous)
+	 *	MANUAL_TOTE_CLAMP_SPEED (In toteClamp, note this also affects autonomous)
+	 *	MANUAL_TOTE_TILT_SPEED (In toteTilt, note this also affects autonomous)
+	 *	
+	 */
+	
+	// "I believe autonomous has an 'i' in it." - Tamara
+	// "Don't quote me on that." -Tamara
 	Joystick leftStick   = new Joystick(0);
     Joystick rightStick  = new Joystick(1);
     Joystick xbox        = new Joystick(2);
@@ -103,7 +154,7 @@ public class OI {
     	//button9.whileHeld ();
     	//button10.whileHeld ();
     	//button11.whileHeld ();
-    	//rightButton1.whenPressed (new ChangeOffsets(leftStick, rightStick));
+    	//rightButton1.whenPressed ();
     	//rightButton2.whileHeld ();
     	rightButton3.whenPressed (new GreasyDrive(leftStick));
     	//rightButton4.whileHeld ();
