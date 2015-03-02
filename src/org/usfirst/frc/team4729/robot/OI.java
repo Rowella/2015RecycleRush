@@ -57,6 +57,7 @@ import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
  */
 public class OI {
 	//NOTE: Emu Winch uses potentiometers ( :) ), Tote Tilt uses Encoders ( :| ) which means it must be in the up state at init and Tote Clamp uses a switch ( >:( ) which means that it cannot use auto to move up
+	//NOTE: The chooser for tote/bin and ramp/noRamp will not appear until the first time autonomous is run so make sure to run autonomous at least once before first match (also to calibrate the distances)
 	
 	/** Wiring
 	 */

@@ -16,8 +16,16 @@ public class DriveSubsystem extends Subsystem {
 	Encoder leftEncoder = new Encoder(3, 4);
 	Encoder rightEncoder = new Encoder(5, 6);
 	Gyro gyro = new Gyro(0);
-	static double rightOffset = 1;
-	static double leftOffset = 1;
+	double rightOffset = 1;
+	double leftOffset = 1;
+	double leftSpeed = 0;
+	double rightSpeed = 0;
+	double turnSpeed = 0;
+	double forwardSpeed = 0;
+	
+	double acceleration = 1;
+	double speed = 1;
+	
 	
     
     // Put methods for controlling this subsystem
@@ -34,6 +42,16 @@ public class DriveSubsystem extends Subsystem {
     public void gyroStart() {
     	gyro.initGyro();
     	
+    }
+    
+    public void highSpeed(){
+    	speed = 1;
+    	acceleration = 0.05;
+    }
+    
+    public void lowSpeed(){
+    	speed = 0.5;
+    	acceleration = 1;
     }
     
    public int readLeftEncoder() {
@@ -57,53 +75,66 @@ public class DriveSubsystem extends Subsystem {
     	gyro.initGyro();
     }
     
-    public void twoStickArcade(Joystick leftStick, Joystick rightStick) {
-    	driveTrain.arcadeDrive(-leftStick.getY(), -rightStick.getX());
+    public void arcade(double desiredMove, double desiredTurn) {
+    	if ((desiredMove < 0.1) && (desiredMove > -0.1)){
+    		desiredMove = 0;
+    		forwardSpeed = 0;
+    	}
+    	if ((desiredTurn < 0.1) && (desiredTurn > -0.1)){
+    		desiredTurn = 0;
+    		turnSpeed = 0;
+    	}
+    	
+    	if  (((desiredMove > 0) && (forwardSpeed < 0)) || ((desiredMove < 0) && (forwardSpeed > 0))){
+    		forwardSpeed = 0;
+    	}
+    	if (((desiredTurn > 0) && (turnSpeed < 0)) || ((desiredTurn < 0) && (turnSpeed > 0))){
+    		turnSpeed = 0;
+    	}
+    	
+    	if (Math.abs(desiredMove) < Math.abs(turnSpeed)){
+    		forwardSpeed = desiredMove;
+    	}
+    	
+    	if (Math.abs(desiredTurn) < Math.abs(turnSpeed)) {
+    		turnSpeed = desiredTurn;
+    	}
+    	
+    	turnSpeed += (desiredTurn-turnSpeed)*acceleration;
+    	forwardSpeed += (desiredMove-forwardSpeed)*acceleration;
+    	driveTrain.arcadeDrive(-forwardSpeed*speed, -turnSpeed*speed);
     }
     
-    public void oneStickArcade(Joystick stick) {
-    	driveTrain.arcadeDrive(-stick.getY(), -stick.getX());
-    }
     
-    public void twoStickTank (Joystick leftStick, Joystick rightStick) {
-    	driveTrain.tankDrive(-leftStick.getY()/leftOffset, -rightStick.getY()/rightOffset);
-		if (!((leftStick.getY() == 0) || (rightStick.getY() == 0) || (leftEncoder.getRate() == 0) || (rightEncoder.getRate() == 0))) {
-			leftOffset *=  Math.abs(leftEncoder.getRate()/leftStick.getY());
-			rightOffset *= Math.abs(rightEncoder.getRate()/rightStick.getY());
-			if (leftOffset > rightOffset){
-				leftOffset /= rightOffset;
-				rightOffset = 1;
-			}else {
-				rightOffset /= leftOffset;
-				leftOffset = 1;
-			}
-	    	SmartDashboard.putNumber("Left Encoder", leftOffset);
-			SmartDashboard.putNumber("Right Encoder", leftOffset);
-		}
-    }
     
-	public void oneStickTank(Joystick stick) {
-		driveTrain.tankDrive(-stick.getY()/leftOffset, -stick.getX()/rightOffset);
-		if (!((stick.getY() == 0) || (stick.getX() == 0) || (leftEncoder.getRate() == 0) || (rightEncoder.getRate() == 0))) {
-			leftOffset *=  Math.abs(leftEncoder.getRate()/stick.getX());
-			rightOffset *= Math.abs(rightEncoder.getRate()/stick.getY());
-			if (leftOffset > rightOffset){
-				leftOffset /= rightOffset;
-				rightOffset = 1;
-			}else {
-				rightOffset /= leftOffset;
-				leftOffset = 1;
-			}
-	    	SmartDashboard.putNumber("Left Encoder", leftOffset);
-			SmartDashboard.putNumber("Right Encoder", leftOffset);
-		}
-	}
-	
-	public void autoTank (double leftSpeed, double rightSpeed) {
-		driveTrain.tankDrive(-leftSpeed/leftOffset, -rightSpeed/rightOffset  );
-		if (!((leftSpeed == 0) || (leftSpeed == 0) || (leftEncoder.getRate() == 0) || (rightEncoder.getRate() == 0))) {
+    public void tank (double desiredLeft, double desiredRight) {
+    	if ((desiredLeft < 0.1) && (desiredLeft > -0.1)){
+    		desiredLeft = 0;
+    		leftSpeed = 0;
+    	}
+    	if ((desiredRight < 0.1) && (desiredRight > -0.1)){
+    		desiredRight = 0;
+    		leftSpeed = 0;
+    	}
+    	
+    	if  (((desiredLeft > 0) && (leftSpeed < 0)) || ((desiredLeft < 0) && (leftSpeed > 0))){
+    		leftSpeed = 0;
+    	}
+    	if (((desiredRight > 0) && (rightSpeed < 0)) || ((desiredRight < 0) && (rightSpeed > 0))){
+    		rightSpeed = 0;
+    	}
+    	
+    	if (Math.abs(desiredLeft) < Math.abs(leftSpeed)){
+    		leftSpeed = desiredLeft;
+    	}
+    	
+    	if (Math.abs(desiredRight) < Math.abs(rightSpeed)) {
+    		rightSpeed = desiredRight;
+    	}
+    	driveTrain.tankDrive(-leftSpeed*speed/leftOffset, -rightSpeed*speed/rightOffset);
+		if (!((leftSpeed == 0) || (rightSpeed == 0) || (leftEncoder.getRate() == 0) || (rightEncoder.getRate() == 0))) {
 			leftOffset *=  Math.abs(leftEncoder.getRate()/leftSpeed);
-			rightOffset *= Math.abs(rightEncoder.getRate()/leftSpeed);
+			rightOffset *= Math.abs(rightEncoder.getRate()/rightSpeed);
 			if (leftOffset > rightOffset){
 				leftOffset /= rightOffset;
 				rightOffset = 1;
@@ -114,7 +145,8 @@ public class DriveSubsystem extends Subsystem {
 	    	SmartDashboard.putNumber("Left Encoder", leftOffset);
 			SmartDashboard.putNumber("Right Encoder", leftOffset);
 		}
-	}
+    }
+    
 	
 	public void greasyDrive(Joystick stick){
 		SmartDashboard.putNumber("Gryo", gyro.getAngle());
