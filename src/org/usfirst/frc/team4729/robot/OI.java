@@ -22,7 +22,6 @@ import org.usfirst.frc.team4729.robot.commands.OneStickTank;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 
-//I will not be there on the Thurs of the comp, contact me at alex+FRC@gormand.com.au from 8:45-10:00 and possibly 1:00-2:00 (I may have 4u maths on at that time)
 
 /**Info for Driving
  * abbreviations:

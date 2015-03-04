@@ -69,7 +69,7 @@ public class AutonomousCommand extends Command {
     		Robot.toteTilt.stop();
     		timer.reset();
         	timer.start();
-    		Robot.driveSubsystem.autoTank(AUTO_SPEED, AUTO_SPEED);
+    		Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     		if (rampOrNo) { //Going across ramp
     			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < RAMP_DISTANCE);
     		}
@@ -84,7 +84,7 @@ public class AutonomousCommand extends Command {
     		Robot.emuWinch.stop();
     		timer.reset();
         	timer.start();
-        	Robot.driveSubsystem.autoTank(AUTO_SPEED, AUTO_SPEED);
+        	Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     		if (rampOrNo) { //Going across ramp
     			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < RAMP_DISTANCE);
     		}
@@ -92,7 +92,7 @@ public class AutonomousCommand extends Command {
     			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < NO_RAMP_DISTANCE);
     		}
     	}
-		Robot.driveSubsystem.autoTank(0, 0);
+		Robot.driveSubsystem.tank(0, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
