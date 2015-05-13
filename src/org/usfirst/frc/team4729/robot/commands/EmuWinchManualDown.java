@@ -26,13 +26,15 @@ Timer timer = new Timer();
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 		SmartDashboard.putString("A Frame Winch Manual State", "Going Down");
-    	if (Robot.manual) {
+    	//if (Robot.manual) {
     		Robot.emuWinch.moveDown();
-    	} else {
-    		while (Robot.emuWinch.emuPotRead() < Robot.EMU_DOWN_ANGLE){
+    	/*} else {
+    		if (Robot.emuWinch.emuPotRead() < Robot.EMU_DOWN_ANGLE){
     			Robot.emuWinch.moveDown();
+    		}else{
+    			Robot.emuWinch.stop();
     		}
-    	}
+    	}*/
     	
     }
 

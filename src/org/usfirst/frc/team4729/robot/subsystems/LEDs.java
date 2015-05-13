@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -30,6 +31,7 @@ public class LEDs extends Subsystem {
     	if (counter > 90) {
     		counter = 0;
     	}
+    	SmartDashboard.putString("LEDS", "On");
     	if (counter <= 10){
     		ledA.set(0);
     		ledB.set(counter/10);
@@ -49,8 +51,13 @@ public class LEDs extends Subsystem {
     		ledA.set(-1+(counter-80)/10);
     		ledB.set(1-(counter-80)/10);
     	}
+
     }
-    
+    public void off(){
+    	ledA.set(0);
+    	ledB.set(0);
+    	SmartDashboard.putString("LEDS", "off");
+    }
     /*public void cycleBack(){
     	timer.reset();
     	double ledAValue = 0;

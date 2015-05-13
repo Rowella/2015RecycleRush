@@ -10,6 +10,8 @@ import org.usfirst.frc.team4729.robot.commands.EmuWinchManualDown;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualUp;
 import org.usfirst.frc.team4729.robot.commands.AutoToManual;
 import org.usfirst.frc.team4729.robot.commands.LedForward;
+import org.usfirst.frc.team4729.robot.commands.SetHighSpeed;
+import org.usfirst.frc.team4729.robot.commands.SetLowSpeed;
 import org.usfirst.frc.team4729.robot.commands.TiltReadValue;
 import org.usfirst.frc.team4729.robot.commands.GreasyDrive;
 import org.usfirst.frc.team4729.robot.commands.ManualToAuto;
@@ -70,12 +72,11 @@ public class OI {
 	 */
 
 	/* Digital In:
-	 * Tote or bin switch is 0
-	 * Ramp or no switch is 1
+	 * Tote tilt encoders are 0 and 1
 	 * Tote Sensor is 2
 	 * Left Encoders are 3 and 4
 	 * Right Encoders are 5 and 6
-	 * Tote Tilt Encoders are 7 and 8
+	 * 
 	 */
 	
 	/*Analog In:
@@ -106,8 +107,6 @@ public class OI {
 	 *	
 	 */
 	
-	// "I believe autonomous has an 'i' in it." - Tamara
-	// "Don't quote me on that." -Tamara
 	Joystick leftStick   = new Joystick(0);
     Joystick rightStick  = new Joystick(1);
     Joystick xbox        = new Joystick(2);
@@ -148,8 +147,8 @@ public class OI {
     	button3.whenPressed (new TwoStickTank(leftStick, rightStick));
     	button4.whenPressed (new OneStickArcade(leftStick));
     	button5.whenPressed (new TwoStickArcade(leftStick, rightStick));
-    	//button6.whileHeld ();
-    	//button7.whileHeld ();
+    	button6.whenPressed (new SetHighSpeed());
+    	button7.whenPressed (new SetLowSpeed());
     	//button8.whileHeld ();
     	//button9.whileHeld ();
     	//button10.whileHeld ();

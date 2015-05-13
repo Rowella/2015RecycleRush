@@ -15,7 +15,7 @@ public class ToteTilt extends Subsystem {
 	static double MANUAL_TOTE_TILT_SPEED = 0.5;
     Talon toteTilt = new Talon(3);
     Potentiometer tiltPot = new AnalogPotentiometer(3);
-    Encoder tiltEncoder = new Encoder(7,8);
+    Encoder tiltEncoder = new Encoder(0,1);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

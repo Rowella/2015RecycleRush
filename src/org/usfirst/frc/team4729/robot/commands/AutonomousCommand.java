@@ -14,9 +14,10 @@ public class AutonomousCommand extends Command {
 	//All constants are in HashDefine
 	Timer timer = new Timer();
 	
-	final static int RAMP_DISTANCE = 100;
-	final static int NO_RAMP_DISTANCE = 0;
-	final static double AUTO_SPEED = 0.65;
+	final static double RAMP_DISTANCE = 0;
+	final static double NO_RAMP_DISTANCE = 0;
+	final static double AUTO_SPEED = -0.65;
+	final static double TO_TOTE_DISTANCE = 3;
 	
 	public static boolean toteOrNo = false;
 	public static boolean rampOrNo = false;
@@ -24,7 +25,6 @@ public class AutonomousCommand extends Command {
 	
 	double tiltUp;
 	double emuUp;
-	SendableChooser toteChooser = new SendableChooser();
 	SendableChooser rampChooser = new SendableChooser();
 	
 	
@@ -40,41 +40,75 @@ public class AutonomousCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
-
+    static int counter = 0;
     // Called just before this Command runs the first time
     protected void initialize() {
-    	toteChooser.addDefault("Going for tote", new GoForTote());
-    	toteChooser.addObject("Going for bin", new DontGoForTote());
-    	SmartDashboard.putData("Tote Chooser", toteChooser);
+    	
     	rampChooser.addDefault("Going on Ramp", new GoOnRamp());
-    	rampChooser.addObject("Not Going on Ramp", new DontGoOnRamp());
+    	rampChooser.addObject("Not Goi"
+    			+ "ng on Ramp", new DontGoOnRamp());
     	SmartDashboard.putData("Ramp Chooser", rampChooser);
+    	counter = 0;
     }
+
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(counter == 0){
+    		timer.reset();
+    		timer.start();
+    	}
+    	if(timer.get() < Robot.autoTime){
+    		Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
+    	} else if ((timer.get() < Robot.autoTime + 0.5) && (Robot.autoTime != 0)){
+    		Robot.driveSubsystem.tank(AUTO_SPEED, -AUTO_SPEED);
+    	} else{
+    		Robot.driveSubsystem.tank(0, 0);
+    	}
+    	counter++;
+    	
 
-    	Robot.driveSubsystem.resetEncoders();
+    	/*SmartDashboard.putString("Au", "Tilt Down");
+    	while(Robot.toteTilt.readTiltEncoder() > Robot.TOTE_TILT_DOWN_ANGLE){
+    		Robot.toteTilt.moveDown();
+    	}
+    	//Robot.driveSubsystem.resetEncoders();
+    	SmartDashboard.putString("Au", "chooser");
     	Command toteDeterminer = (Command) toteChooser.getSelected();
     	toteDeterminer.start();
     	Command rampDeterminer = (Command) rampChooser.getSelected();
     	rampDeterminer.start();
+    	timer.reset();
+    	timer.start();
     	
     	if (toteOrNo) { //Going for tote
+    		SmartDashboard.putString("Au", "1sec");
+    		while (timer.get() < TO_TOTE_DISTANCE){
+    			Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
+    		}
+    		Robot.driveSubsystem.tank(0,0);
+    		//Robot.driveSubsystem.resetEncoders();
+    		SmartDashboard.putString("Au", "clamp");
     		Robot.toteClamp.moveDown();
-    		while (!Robot.toteClamp.readToteSensor());
+    		//while (!Robot.toteClamp.readToteSensor());
     		Robot.toteClamp.stop();
+    		SmartDashboard.putString("Au", "Tilt");
     		Robot.toteTilt.moveUp();
-    		while (Robot.toteTilt.readTiltEncoder() < tiltUp); //wait until tote is fully up
+    		while (Robot.toteTilt.readTiltEncoder() < tiltUp){//wait until tote is fully up
+    			Robot.toteTilt.moveUp();
+    		}
     		Robot.toteTilt.stop();
     		timer.reset();
         	timer.start();
-    		Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     		if (rampOrNo) { //Going across ramp
-    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < RAMP_DISTANCE);
+    			while ((timer.get()) < RAMP_DISTANCE){
+    				Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
+    			}
     		}
     		else { //Not going across ramp
-    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < NO_RAMP_DISTANCE);
+    			while ((timer.get()) < NO_RAMP_DISTANCE){
+    				Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
+    			}
     		}
     	}
     
@@ -84,15 +118,20 @@ public class AutonomousCommand extends Command {
     		Robot.emuWinch.stop();
     		timer.reset();
         	timer.start();
-        	Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     		if (rampOrNo) { //Going across ramp
-    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < RAMP_DISTANCE);
+    			while ((timer.get()) < RAMP_DISTANCE){
+    	        	Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
+    			}
     		}
     		else {
-    			while ((Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder()) < NO_RAMP_DISTANCE);
+    			while ((timer.get()) < NO_RAMP_DISTANCE){
+    	        	Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
+    			}
     		}
     	}
+    	SmartDashboard.putString("Au", "End");
 		Robot.driveSubsystem.tank(0, 0);
+		while (true);*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

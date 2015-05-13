@@ -25,13 +25,15 @@ public class EmuWinchManualUp extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putString("A Frame Winch Manual State", "Going Up");
-    	if (Robot.manual) {
+    	//if (Robot.manual) {
     		Robot.emuWinch.moveUp();
-    	} else {
-    		while (Robot.emuWinch.emuPotRead() > Robot.EMU_UP_ANGLE) {
+    	/*} else {
+    		if (Robot.emuWinch.emuPotRead() > Robot.EMU_UP_ANGLE) {
     			Robot.emuWinch.moveUp();
+    		} else{
+    			Robot.emuWinch.stop();
     		}
-    	}
+    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -3,17 +3,13 @@ package org.usfirst.frc.team4729.robot.commands;
 import org.usfirst.frc.team4729.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ToteTiltManualDown extends Command {
+public class AutoMedium extends Command {
 
-    public ToteTiltManualDown() {
-    	requires(Robot.toteTilt);
-    	//requires(Robot.manualOrAuto);
-    	//requires(Robot.hashDefine);
+    public AutoMedium() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -24,12 +20,7 @@ public class ToteTiltManualDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putString("Tote Tilt Manual State", "Going Down");
-    	if (Robot.toteTilt.readTiltEncoder() > Robot.TOTE_TILT_DOWN_ANGLE){
-    			Robot.toteTilt.moveDown();
-    	}else{
-    		Robot.toteTilt.stop();
-    	}
+    	Robot.autoTime = 3.85;
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,13 +30,10 @@ public class ToteTiltManualDown extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.toteTilt.stop();
-    	SmartDashboard.putString("Tote Tilt Manual State", "Inactive");
     }
 }

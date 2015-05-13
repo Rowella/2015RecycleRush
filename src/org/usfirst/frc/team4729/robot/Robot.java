@@ -7,7 +7,13 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team4729.robot.commands.AutoClose;
+import org.usfirst.frc.team4729.robot.commands.AutoFar;
+import org.usfirst.frc.team4729.robot.commands.AutoMedium;
+import org.usfirst.frc.team4729.robot.commands.AutoNone;
 import org.usfirst.frc.team4729.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
@@ -47,11 +53,14 @@ public class Robot extends IterativeRobot {
 	public static boolean manual = true;
 	//This is where all of the constants are placed
 	
-	final public static double TOTE_TILT_UP_ANGLE = 380;
-	final public static double TOTE_TILT_DOWN_ANGLE = 100;
+	final public static double TOTE_TILT_UP_ANGLE = 0;
+	final public static double TOTE_TILT_DOWN_ANGLE = -270;
 	final public static double EMU_UP_ANGLE = 0.074;
 	final public static double EMU_DOWN_ANGLE = 0.084;
-	
+
+	public static double autoTime = 3.65;
+
+	SendableChooser toteChooser = new SendableChooser();
 
 	
     Command autonomousCommand;
@@ -73,6 +82,11 @@ public class Robot extends IterativeRobot {
 		System.out.println("Before OI");
     	oi = new OI();
     	System.out.println("After OI");
+    	toteChooser.addDefault("Medium", new AutoMedium());
+    	toteChooser.addObject("Short", new AutoClose());
+    	toteChooser.addObject("Long", new AutoFar());
+    	toteChooser.addObject("Nothing", new AutoNone());
+    	SmartDashboard.putData("Speed", toteChooser);
         // instantiate the command used for the autonomous period
         autonomousCommand = new AutonomousCommand(TOTE_TILT_UP_ANGLE, EMU_UP_ANGLE);//TOTE_CLAMP_UP_ANGLE, TOTE_TILT_UP_ANGLE, EMU_UP_ANGLE);
     }
@@ -82,6 +96,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
+    	toteChooser.getSelected();
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }

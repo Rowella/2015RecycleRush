@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveSubsystem extends Subsystem {
 	RobotDrive driveTrain = new RobotDrive(0, 1);
-	Encoder leftEncoder = new Encoder(3, 4);
-	Encoder rightEncoder = new Encoder(5, 6);
+	//Encoder leftEncoder = new Encoder(3, 4);
+	//Encoder rightEncoder = new Encoder(5, 6);
 	Gyro gyro = new Gyro(0);
 	double rightOffset = 1;
 	double leftOffset = 1;
@@ -23,7 +23,7 @@ public class DriveSubsystem extends Subsystem {
 	double turnSpeed = 0;
 	double forwardSpeed = 0;
 	
-	double acceleration = 1;
+	double acceleration = 0.05;
 	double speed = 1;
 	
 	
@@ -54,7 +54,7 @@ public class DriveSubsystem extends Subsystem {
     	acceleration = 1;
     }
     
-   public int readLeftEncoder() {
+   /*public int readLeftEncoder() {
     	int leftValue = leftEncoder.get();
     	SmartDashboard.putNumber("Left Encoder", leftValue);
     	return leftValue;
@@ -64,12 +64,12 @@ public class DriveSubsystem extends Subsystem {
     	int rightValue = rightEncoder.get();
     	SmartDashboard.putNumber("Right Encoder", rightValue);
     	return rightValue;
-    }
+    }*/
     
-    public void resetEncoders() {
+    /*public void resetEncoders() {
     	leftEncoder.reset();
     	rightEncoder.reset();
-    }
+    }*/
     
     public void resetGryo(){
     	gyro.initGyro();
@@ -114,7 +114,7 @@ public class DriveSubsystem extends Subsystem {
     	}
     	if ((desiredRight < 0.1) && (desiredRight > -0.1)){
     		desiredRight = 0;
-    		leftSpeed = 0;
+    		rightSpeed = 0;
     	}
     	
     	if  (((desiredLeft > 0) && (leftSpeed < 0)) || ((desiredLeft < 0) && (leftSpeed > 0))){
@@ -131,21 +131,13 @@ public class DriveSubsystem extends Subsystem {
     	if (Math.abs(desiredRight) < Math.abs(rightSpeed)) {
     		rightSpeed = desiredRight;
     	}
+    	rightSpeed += (desiredRight-rightSpeed)*acceleration;
+    	leftSpeed += (desiredLeft-leftSpeed)*acceleration;
     	driveTrain.tankDrive(-leftSpeed*speed/leftOffset, -rightSpeed*speed/rightOffset);
-		if (!((leftSpeed == 0) || (rightSpeed == 0) || (leftEncoder.getRate() == 0) || (rightEncoder.getRate() == 0))) {
-			leftOffset *=  Math.abs(leftEncoder.getRate()/leftSpeed);
-			rightOffset *= Math.abs(rightEncoder.getRate()/rightSpeed);
-			if (leftOffset > rightOffset){
-				leftOffset /= rightOffset;
-				rightOffset = 1;
-			}else {
-				rightOffset /= leftOffset;
-				leftOffset = 1;
-			}
+		
 	    	SmartDashboard.putNumber("Left Encoder", leftOffset);
-			SmartDashboard.putNumber("Right Encoder", leftOffset);
-		}
-    }
+			SmartDashboard.putNumber("Right Encoder", rightOffset);
+	}
     
 	
 	public void greasyDrive(Joystick stick){
