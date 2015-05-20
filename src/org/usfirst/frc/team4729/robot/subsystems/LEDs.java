@@ -58,6 +58,11 @@ public class LEDs extends Subsystem {
     	ledB.set(0);
     	SmartDashboard.putString("LEDS", "off");
     }
+    
+    public void set(double a, double b){
+    	ledA.set(a);
+    	ledB.set(b);
+    }
     /*public void cycleBack(){
     	timer.reset();
     	double ledAValue = 0;

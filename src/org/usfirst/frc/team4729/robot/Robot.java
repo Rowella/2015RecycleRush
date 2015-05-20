@@ -15,7 +15,9 @@ import org.usfirst.frc.team4729.robot.commands.AutoFar;
 import org.usfirst.frc.team4729.robot.commands.AutoMedium;
 import org.usfirst.frc.team4729.robot.commands.AutoNone;
 import org.usfirst.frc.team4729.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team4729.robot.commands.FindDistance;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
+import org.usfirst.frc.team4729.robot.subsystems.DistanceSensor;
 import org.usfirst.frc.team4729.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team4729.robot.subsystems.EmuWinch;
 //import org.usfirst.frc.team4729.robot.subsystems.HashDefine;
@@ -45,16 +47,18 @@ public class Robot extends IterativeRobot {
 	public static  ToteClamp toteClamp;
 	public static  EmuWinch emuWinch; 
 	public static  Switches switches;
+	public static  DistanceSensor distanceSensor;
 	//public static  ManualOrAuto manualOrAuto;
 	//public static  HashDefine hashDefine;
 	public static  LEDs leds;
 	public static OI oi;
 	
 	public static boolean manual = true;
+	public static boolean ledMovement = true;
 	//This is where all of the constants are placed
 	
-	final public static double TOTE_TILT_UP_ANGLE = 0;
-	final public static double TOTE_TILT_DOWN_ANGLE = -270;
+	final public static double TOTE_TILT_UP_ANGLE = -270;
+	final public static double TOTE_TILT_DOWN_ANGLE = 0;
 	final public static double EMU_UP_ANGLE = 0.074;
 	final public static double EMU_DOWN_ANGLE = 0.084;
 
@@ -76,6 +80,7 @@ public class Robot extends IterativeRobot {
     	toteClamp = new ToteClamp();
     	emuWinch = new EmuWinch(); 
     	switches = new Switches();
+    	distanceSensor = new DistanceSensor();
     	//manualOrAuto = new ManualOrAuto();
     	//hashDefine = new HashDefine();
     	leds = new LEDs();
@@ -117,7 +122,9 @@ public class Robot extends IterativeRobot {
         Joystick leftStick = new Joystick(0);
         Joystick rightStick = new Joystick(1);
         TwoStickArcade twoStickArcade = new TwoStickArcade(leftStick, rightStick);
-		twoStickArcade.start();
+		FindDistance findDistance = new FindDistance();
+		findDistance.start();
+        twoStickArcade.start();
     }
 
     /**

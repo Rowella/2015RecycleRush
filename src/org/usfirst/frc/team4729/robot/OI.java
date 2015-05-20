@@ -9,7 +9,10 @@ import org.usfirst.frc.team4729.robot.commands.EmuReadValue;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualDown;
 import org.usfirst.frc.team4729.robot.commands.EmuWinchManualUp;
 import org.usfirst.frc.team4729.robot.commands.AutoToManual;
+import org.usfirst.frc.team4729.robot.commands.FindDistance;
+import org.usfirst.frc.team4729.robot.commands.LedDistance;
 import org.usfirst.frc.team4729.robot.commands.LedForward;
+import org.usfirst.frc.team4729.robot.commands.LedMovement;
 import org.usfirst.frc.team4729.robot.commands.SetHighSpeed;
 import org.usfirst.frc.team4729.robot.commands.SetLowSpeed;
 import org.usfirst.frc.team4729.robot.commands.TiltReadValue;
@@ -138,6 +141,8 @@ public class OI {
     Button y             = new JoystickButton(xbox,       4);
     Button lb            = new JoystickButton(xbox,       5);
     Button rb            = new JoystickButton(xbox,       6);
+    Button start		 = new JoystickButton(xbox,       7);
+    Button select        = new JoystickButton(xbox,       8);
     Button l3            = new JoystickButton(xbox,       9);
     Button r3            = new JoystickButton(xbox,       10);
     
@@ -151,7 +156,7 @@ public class OI {
     	button7.whenPressed (new SetLowSpeed());
     	//button8.whileHeld ();
     	//button9.whileHeld ();
-    	//button10.whileHeld ();
+    	button10.whileHeld (new FindDistance());
     	//button11.whileHeld ();
     	//rightButton1.whenPressed ();
     	//rightButton2.whileHeld ();
@@ -170,6 +175,8 @@ public class OI {
     	y.whileHeld (new ToteTiltManualUp());
     	lb.whileHeld (new EmuWinchManualDown());
     	rb.whileHeld (new EmuWinchManualUp());
+    	start.whileHeld(new LedDistance());
+    	select.whileHeld(new LedMovement());
     	l3.whileHeld (new AutoToManual());
     	r3.whileHeld (new ManualToAuto());
     	

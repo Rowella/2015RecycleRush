@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4729.robot.subsystems;
 
 //import edu.wpi.first.wpilibj.Encoder;
+import org.usfirst.frc.team4729.robot.Robot;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
@@ -103,6 +105,9 @@ public class DriveSubsystem extends Subsystem {
     	turnSpeed += (desiredTurn-turnSpeed)*acceleration;
     	forwardSpeed += (desiredMove-forwardSpeed)*acceleration;
     	driveTrain.arcadeDrive(-forwardSpeed*speed, -turnSpeed*speed);
+    	if (Robot.ledMovement == true){
+    		Robot.leds.set(-forwardSpeed*speed, -turnSpeed*speed);
+    	}
     }
     
     
@@ -134,6 +139,9 @@ public class DriveSubsystem extends Subsystem {
     	rightSpeed += (desiredRight-rightSpeed)*acceleration;
     	leftSpeed += (desiredLeft-leftSpeed)*acceleration;
     	driveTrain.tankDrive(-leftSpeed*speed/leftOffset, -rightSpeed*speed/rightOffset);
+    	if (Robot.ledMovement == true){
+    		Robot.leds.set(-leftSpeed*speed/leftOffset, -rightSpeed*speed/rightOffset);
+    	}
 		
 	    	SmartDashboard.putNumber("Left Encoder", leftOffset);
 			SmartDashboard.putNumber("Right Encoder", rightOffset);
