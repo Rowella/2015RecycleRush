@@ -57,12 +57,12 @@ public class Robot extends IterativeRobot {
 	public static boolean ledMovement = true;
 	//This is where all of the constants are placed
 	
-	final public static double TOTE_TILT_UP_ANGLE = -270;
+	final public static double TOTE_TILT_UP_ANGLE = 270;
 	final public static double TOTE_TILT_DOWN_ANGLE = 0;
 	final public static double EMU_UP_ANGLE = 0.074;
 	final public static double EMU_DOWN_ANGLE = 0.084;
 
-	public static double autoTime = 3.65;
+	public static double autoTime = 365;
 
 	SendableChooser toteChooser = new SendableChooser();
 

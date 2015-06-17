@@ -27,6 +27,7 @@ import org.usfirst.frc.team4729.robot.commands.OneStickTank;
 import org.usfirst.frc.team4729.robot.commands.TwoStickArcade;
 import org.usfirst.frc.team4729.robot.commands.TwoStickTank;
 
+//NOTE: If you cannot connect set the connection status IPV4 to obtain IP address automatically
 
 /**Info for Driving
  * abbreviations:
@@ -173,8 +174,8 @@ public class OI {
     	b.whileHeld (new ToteClampManualUp());
     	x.whileHeld (new ToteClampManualDown());
     	y.whileHeld (new ToteTiltManualUp());
-    	lb.whileHeld (new EmuWinchManualDown());
-    	rb.whileHeld (new EmuWinchManualUp());
+    	lb.whileHeld (new EmuWinchManualUp());
+    	rb.whileHeld (new EmuWinchManualDown());
     	start.whileHeld(new LedDistance());
     	select.whileHeld(new LedMovement());
     	l3.whileHeld (new AutoToManual());

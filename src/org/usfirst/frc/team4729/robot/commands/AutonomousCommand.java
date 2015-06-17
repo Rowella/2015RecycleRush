@@ -58,10 +58,10 @@ public class AutonomousCommand extends Command {
     		timer.reset();
     		timer.start();
     	}
-    	if(timer.get() < Robot.autoTime){
+    	if(Robot.driveSubsystem.readLeftEncoder() < Robot.autoTime){
     		Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
-    	} else if ((timer.get() < Robot.autoTime + 0.5) && (Robot.autoTime != 0)){
-    		Robot.driveSubsystem.tank(AUTO_SPEED, -AUTO_SPEED);
+    	} else if (Robot.emuWinch.emuPotRead() < Robot.EMU_UP_ANGLE){
+    		Robot.emuWinch.moveUp();
     	} else{
     		Robot.driveSubsystem.tank(0, 0);
     	}
@@ -83,7 +83,7 @@ public class AutonomousCommand extends Command {
     	
     	if (toteOrNo) { //Going for tote
     		SmartDashboard.putString("Au", "1sec");
-    		while (timer.get() < TO_TOTE_DISTANCE){
+    		while (Robot.driveSubsystem.readLeftEncoder() < TO_TOTE_DISTANCE){
     			Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     		}
     		Robot.driveSubsystem.tank(0,0);
@@ -101,12 +101,12 @@ public class AutonomousCommand extends Command {
     		timer.reset();
         	timer.start();
     		if (rampOrNo) { //Going across ramp
-    			while ((timer.get()) < RAMP_DISTANCE){
+    			while ((Robot.driveSubsystem.readLeftEncoder()) < RAMP_DISTANCE){
     				Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     			}
     		}
     		else { //Not going across ramp
-    			while ((timer.get()) < NO_RAMP_DISTANCE){
+    			while ((Robot.driveSubsystem.readLeftEncoder()) < NO_RAMP_DISTANCE){
     				Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     			}
     		}
@@ -119,12 +119,12 @@ public class AutonomousCommand extends Command {
     		timer.reset();
         	timer.start();
     		if (rampOrNo) { //Going across ramp
-    			while ((timer.get()) < RAMP_DISTANCE){
+    			while ((Robot.driveSubsystem.readLeftEncoder()) < RAMP_DISTANCE){
     	        	Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     			}
     		}
     		else {
-    			while ((timer.get()) < NO_RAMP_DISTANCE){
+    			while ((Robot.driveSubsystem.readLeftEncoder()) < NO_RAMP_DISTANCE){
     	        	Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     			}
     		}

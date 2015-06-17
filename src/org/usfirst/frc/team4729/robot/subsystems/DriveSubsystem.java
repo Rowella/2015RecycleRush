@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveSubsystem extends Subsystem {
 	RobotDrive driveTrain = new RobotDrive(0, 1);
-	//Encoder leftEncoder = new Encoder(3, 4);
-	//Encoder rightEncoder = new Encoder(5, 6);
-	Gyro gyro = new Gyro(0);
+	Encoder leftEncoder = new Encoder(3, 4);
+	Encoder rightEncoder = new Encoder(5, 6);
+	/**Gyro gyro = new Gyro(0);*/
 	double rightOffset = 1;
 	double leftOffset = 1;
 	double leftSpeed = 0;
@@ -34,7 +34,7 @@ public class DriveSubsystem extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-    	gyro.initGyro();
+    	/**gyro.initGyro();*/
     	//leftEncoder.setDistancePerPulse(1);
     	//rightEncoder.setDistancePerPulse(1);
         // Set the default command for a subsystem here.
@@ -42,7 +42,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void gyroStart() {
-    	gyro.initGyro();
+    	/**gyro.initGyro();*/
     	
     }
     
@@ -56,7 +56,7 @@ public class DriveSubsystem extends Subsystem {
     	acceleration = 1;
     }
     
-   /*public int readLeftEncoder() {
+   public int readLeftEncoder() {
     	int leftValue = leftEncoder.get();
     	SmartDashboard.putNumber("Left Encoder", leftValue);
     	return leftValue;
@@ -66,18 +66,20 @@ public class DriveSubsystem extends Subsystem {
     	int rightValue = rightEncoder.get();
     	SmartDashboard.putNumber("Right Encoder", rightValue);
     	return rightValue;
-    }*/
+    }
     
-    /*public void resetEncoders() {
+    public void resetEncoders() {
     	leftEncoder.reset();
     	rightEncoder.reset();
-    }*/
+    }
     
     public void resetGryo(){
-    	gyro.initGyro();
+    	/**gyro.initGyro();*/
     }
     
     public void arcade(double desiredMove, double desiredTurn) {
+    	readLeftEncoder();
+    	readRightEncoder();
     	if ((desiredMove < 0.1) && (desiredMove > -0.1)){
     		desiredMove = 0;
     		forwardSpeed = 0;
@@ -113,6 +115,8 @@ public class DriveSubsystem extends Subsystem {
     
     
     public void tank (double desiredLeft, double desiredRight) {
+    	readRightEncoder();
+    	readLeftEncoder();
     	if ((desiredLeft < 0.1) && (desiredLeft > -0.1)){
     		desiredLeft = 0;
     		leftSpeed = 0;
@@ -149,14 +153,14 @@ public class DriveSubsystem extends Subsystem {
     
 	
 	public void greasyDrive(Joystick stick){
-		SmartDashboard.putNumber("Gryo", gyro.getAngle());
+		/**SmartDashboard.putNumber("Gryo", gyro.getAngle());
 		if (gyro.getAngle() < (Math.toDegrees(Math.atan2(stick.getY(), stick.getX())) - 15)){
 			driveTrain.arcadeDrive(0, Math.min(Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)), 1));
 		} else if (gyro.getAngle() > (Math.toDegrees(Math.atan2(stick.getY(), stick.getX())) + 15)){
 			driveTrain.arcadeDrive(0, Math.max(-Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)), -1));
 		} else{
 			driveTrain.tankDrive(Math.min(1, Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)))/leftOffset, Math.min(1, Math.sqrt(Math.pow(stick.getY(), 2)+Math.pow(stick.getX(), 2)))/rightOffset);
-		}
+		}*/
 	}
 	
 	
