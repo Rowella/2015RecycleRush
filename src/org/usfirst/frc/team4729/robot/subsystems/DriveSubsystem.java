@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveSubsystem extends Subsystem {
 	RobotDrive driveTrain = new RobotDrive(0, 1);
-	Encoder leftEncoder = new Encoder(3, 4);
-	Encoder rightEncoder = new Encoder(5, 6);
+	Encoder leftEncoder = new Encoder(5, 6);
+	Encoder rightEncoder = new Encoder(2, 3);
 	/**Gyro gyro = new Gyro(0);*/
 	double rightOffset = 1;
 	double leftOffset = 1;
@@ -35,8 +35,8 @@ public class DriveSubsystem extends Subsystem {
 
     public void initDefaultCommand() {
     	/**gyro.initGyro();*/
-    	//leftEncoder.setDistancePerPulse(1);
-    	//rightEncoder.setDistancePerPulse(1);
+    	leftEncoder.setDistancePerPulse(1);
+    	rightEncoder.setDistancePerPulse(1);
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
@@ -147,8 +147,8 @@ public class DriveSubsystem extends Subsystem {
     		Robot.leds.set(-leftSpeed*speed/leftOffset, -rightSpeed*speed/rightOffset);
     	}
 		
-	    	SmartDashboard.putNumber("Left Encoder", leftOffset);
-			SmartDashboard.putNumber("Right Encoder", rightOffset);
+	    	SmartDashboard.putNumber("Left Encoder", readLeftEncoder());
+			SmartDashboard.putNumber("Right Encoder", readRightEncoder());
 	}
     
 	

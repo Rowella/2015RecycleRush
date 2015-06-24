@@ -58,7 +58,7 @@ public class AutonomousCommand extends Command {
     		timer.reset();
     		timer.start();
     	}
-    	if(Robot.driveSubsystem.readLeftEncoder() < Robot.autoTime){
+    	if(Robot.driveSubsystem.readLeftEncoder() + Robot.driveSubsystem.readRightEncoder() < Robot.autoTime){
     		Robot.driveSubsystem.tank(AUTO_SPEED, AUTO_SPEED);
     	} else if (Robot.emuWinch.emuPotRead() < Robot.EMU_UP_ANGLE){
     		Robot.emuWinch.moveUp();
